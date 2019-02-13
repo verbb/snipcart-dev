@@ -4,6 +4,7 @@ use workingconcept\snipcart\controllers\WebhooksController;
 use workingconcept\snipcart\models\Customer;
 use workingconcept\snipcart\models\Order;
 use workingconcept\snipcart\models\Item;
+use workingconcept\snipcart\fields\ProductDetails;
 use craft\elements\Entry;
 use workingconcept\snipcart\Snipcart;
 use GuzzleHttp\Client;
@@ -56,7 +57,7 @@ class WebhookCest
     }
 
     /**
-     * Missing content
+     * Missing content.
      */
     public function testEmptyContent(\ApiTester $I)
     {
@@ -360,6 +361,22 @@ class WebhookCest
         ]);
     }
 
+    private function getProductDetailsField($element)
+    {
+        $fieldLayout = $element->getFieldLayout();
+        $fields = $fieldLayout->getFields();
+
+        foreach ($fields as $field)
+        {
+            if ($field instanceof ProductDetails)
+            {
+                return $element->{$field->handle};
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Get test order items.
      *
@@ -379,26 +396,13 @@ class WebhookCest
 
         foreach ($entries as $entry)
         {
-            if ($entry->getType()->handle === 'book')
-            {
-                // Book entries are configured with a productDetails field
+            $detailsField = $this->getProductDetailsField($entry);
 
-                $price     = $entry->productDetails->price;
-                $shippable = $entry->productDetails->shippable;
-                $taxable   = $entry->productDetails->taxable;
-                $weight    = $entry->productDetails->weight;
-                $sku       = $entry->productDetails->sku;
-            }
-            elseif ($entry->getType()->handle === 'song')
-            {
-                // Book entries are configured with individual custom fields
-
-                $price     = $entry->productPrice;
-                $shippable = $entry->productShippable;
-                $taxable   = $entry->productTaxable;
-                $weight    = $entry->productWeight;
-                $sku       = $entry->productSku;
-            }
+            $price     = $detailsField->price;
+            $shippable = $detailsField->shippable;
+            $taxable   = $detailsField->taxable;
+            $weight    = $detailsField->weight;
+            $sku       = $detailsField->sku;
 
             $items[] = new Item([
                 'token'        => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
