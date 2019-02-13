@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>{{ pageTitle ?? siteName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    {% block header %}
+    <header class="mx-auto max-w-md mt-6">
+        <a class="text-black text-2xl no-underline" href="{{ siteUrl }}">
+            {{- siteName -}}
+        </a>
+    </header>
+    {% endblock %}
+
+    {% block nav %}
+    <nav class="mx-auto max-w-md mt-6">
+        <ul class="list-reset">
+            <li class="inline-block mr-4">
+                <a href="{{ siteUrl }}">
+                    {{ "Home"|t }}
+                </a>
+            </li>
+            <li class="inline-block mr-4">
+                {{ craft.snipcart.cartLink }}
+            </li>
+        </ul>
+    </nav>
+    {% endblock %}
+
+    {% block main %}
+    {% endblock %}
+
+    {{ craft.snipcart.cartSnippet(true, '', true) }}
+</body>
+</html>

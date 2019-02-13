@@ -1,0 +1,30 @@
+{
+    "require": {
+        "php": "^7.0.0",
+        "craftcms/cms": "^3.0.0",
+        "workingconcept/craft-snipcart": "@dev"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "modules\\": "modules/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "7.2"
+        }
+    },
+    "scripts": {
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "symlink": false,
+            "url": "./plugin/"
+        }
+    ]
+}

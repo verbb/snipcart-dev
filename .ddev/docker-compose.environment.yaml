@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  web:
+    environment:
+      - ENVIRONMENT=dev
+      - SITE_URL=https://snipcart-test.ddev.local
+      - SECURITY_KEY=12345
+      - DB_DRIVER=mysql
+      - DB_SERVER=db
+      - DB_USER=db
+      - DB_PASSWORD=db
+      - DB_DATABASE=db
+      - DB_SCHEMA=public

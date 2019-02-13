@@ -1,0 +1,26 @@
+{% extends "_layout" %}
+
+{% block main %}
+    <section class="max-w-md mx-auto mt-12">
+        <h1>{{ entry.title }}</h1>
+
+        {% if entry.productDetails.price %}
+            <p class="text-grey">{{ entry.productDetails.price | currency }}</p>
+        {% endif %}
+
+        {{ entry.productDetails.getBuyNowButton({
+            classes: [
+                'inline-block',
+                'mt-6',
+                'px-4',
+                'py-2',
+                'rounded',
+                'border',
+                'border-blue',
+                'no-underline',
+                'bg-blue',
+                'text-white',
+            ]
+        }) | raw }}
+    </section>
+{% endblock %}
