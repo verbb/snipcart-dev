@@ -115,7 +115,7 @@ Run sync, which watches and rsyncs changes into the project folder:
       "symlink": false,
       "url": "./plugins/snipcart/"
     },
-  }
+  ]
 ```
 
 ```
