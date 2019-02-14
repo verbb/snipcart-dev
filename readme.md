@@ -22,14 +22,14 @@ A barebones test project for making sure the Snipcart plugin behaves itself. BYO
 
 ## Initial Setup
 
-Run the setup script from inside the container:
+[Install DDEV](https://ddev.readthedocs.io/en/stable/#installation), start the site with `ddev start`, and run the setup script from inside the container:
 
 ```shell
 ddev ssh
 ./scripts/setup.sh
 ```
 
-This will pull composer dependencies, install Craft, and install the Snipcart plugin.
+This will pull composer dependencies, install Craft, and install the Snipcart plugin. The site will be available at https://snipcart-test.ddev.local, and Mailhog will be running at http://snipcart-test.ddev.local:8025.
 
 ## Testing Setup
 
