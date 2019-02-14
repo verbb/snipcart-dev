@@ -2,7 +2,8 @@
     "require": {
         "php": "^7.0.0",
         "craftcms/cms": "^3.0.0",
-        "workingconcept/craft-snipcart": "@dev"
+        "workingconcept/craft-snipcart": "@dev",
+        "vlucas/phpdotenv": "^2.4.0"
     },
     "require-dev": {
         "codeception/codeception": "^2.4"
