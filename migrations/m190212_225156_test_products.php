@@ -5,15 +5,10 @@ namespace craft\contentmigrations;
 use Craft;
 use craft\db\Migration;
 use craft\elements\Entry;
-use craft\models\FieldLayout;
 use craft\models\Section;
 use craft\models\Section_SiteSettings;
-use craft\fields\Number;
 use craft\fields\PlainText;
-use craft\fields\Lightswitch;
-use craft\fields\Dropdown;
 use craft\models\FieldGroup;
-use craft\models\EntryType;
 use craft\models\FieldLayoutTab;
 use workingconcept\snipcart\fields\ProductDetails;
 use workingconcept\snipcart\models\ProductDetails as ProductDetailsModel;
@@ -75,6 +70,19 @@ class m190212_225156_test_products extends Migration
         Craft::$app->getFields()->saveField($productDetailsField);
 
         /**
+         * Product Description
+         */
+        $productDescriptionField = new PlainText();
+        $productDescriptionField->groupId = $productFieldGroup->id;
+        $productDescriptionField->name = 'Product Description';
+        $productDescriptionField->handle = 'productDescription';
+        $productDescriptionField->required = false;
+        $productDescriptionField->multiline = true;
+        $productDescriptionField->initialRows = 2;
+
+        Craft::$app->getFields()->saveField($productDescriptionField);
+
+        /**
          * Products Channel
          */
         $products = new Section();
@@ -113,6 +121,7 @@ class m190212_225156_test_products extends Migration
                 'sortOrder' => 1,
                 'fields' => [
                     $productDetailsField,
+                    $productDescriptionField,
                 ]
             ]),
         ]);

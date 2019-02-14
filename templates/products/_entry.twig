@@ -1,5 +1,18 @@
 {% extends "_layout" %}
 
+{% set buttonClasses = [
+    'inline-block',
+    'mt-4',
+    'px-4',
+    'py-2',
+    'rounded',
+    'border',
+    'border-blue',
+    'no-underline',
+    'bg-blue',
+    'text-white',
+] %}
+
 {% block main %}
     <section class="max-w-md mx-auto mt-12">
         <h1>{{ entry.title }}</h1>
@@ -10,20 +23,15 @@
             <p class="text-grey">{{ productInfo.price | currency }}</p>
         {% endif %}
 
+
+        <p class="text-grey text-sm mt-12 pt-2 border-t border-grey-light">This is a really plain button.</p>
+
         {{ productInfo.getBuyNowButton({
-            classes: [
-                'inline-block',
-                'mt-6',
-                'px-4',
-                'py-2',
-                'rounded',
-                'border',
-                'border-blue',
-                'no-underline',
-                'bg-blue',
-                'text-white',
-            ]
+            classes: buttonClasses
         }) | raw }}
+
+
+        <p class="text-grey text-sm mt-12 pt-2 border-t border-grey-light">This button has simple custom options that don't affect the item's price.</p>
 
         {{ productInfo.getBuyNowButton({
             text: 'Buy Now + Options',
@@ -33,19 +41,19 @@
                 'options': [ 'blue', 'green', 'red', 'pink' ]
 
             }],
-            classes: [
-                'inline-block',
-                'mt-6',
-                'ml-1',
-                'px-4',
-                'py-2',
-                'rounded',
-                'border',
-                'border-blue',
-                'no-underline',
-                'bg-blue',
-                'text-white',
-            ]
+            classes: buttonClasses
         }) | raw }}
+
+
+        <p class="text-grey text-sm mt-12 pt-2 border-t border-grey-light">This button uses `additionalProps` to set a maximum quantity.</p>
+
+        {{ productInfo.getBuyNowButton({
+            text: 'Buy Now + Max Qty',
+            additionalProps: {
+                'data-item-max-quantity': 3
+            },
+            classes: buttonClasses
+        }) | raw }}
+
     </section>
 {% endblock %}

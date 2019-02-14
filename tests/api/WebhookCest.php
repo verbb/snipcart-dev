@@ -57,6 +57,22 @@ class WebhookCest
     }
 
     /**
+     * Supply a webhook post with a missing mode.
+     */
+    public function testMissingMode(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+            'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
+            'createdOn' => date('c'),
+            'content'   => $this->getSnipcartOrder()
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::BAD_REQUEST);
+        $I->seeResponseContains('{"success":false,"errors":{"reason":"Request missing mode."}}');
+    }
+
+    /**
      * Missing content.
      */
     public function testEmptyContent(\ApiTester $I)
@@ -216,6 +232,8 @@ class WebhookCest
         $I->assertTrue($containsShipStationReference, 'Email contains ShipStation ID.');
     }
 
+    // TODO: make sure ShipStation gets correct weight unit
+    // TODO: make sure ShipStation gets correct dimension unit
     // TODO: confirm exception or logging when no shipping rates are returned
     // TODO: confirm presence of order note when configured
     // TODO: confirm presence of gift note when configured
@@ -361,22 +379,6 @@ class WebhookCest
         ]);
     }
 
-    private function getProductDetailsField($element)
-    {
-        $fieldLayout = $element->getFieldLayout();
-        $fields = $fieldLayout->getFields();
-
-        foreach ($fields as $field)
-        {
-            if ($field instanceof ProductDetails)
-            {
-                return $element->{$field->handle};
-            }
-        }
-
-        return null;
-    }
-
     /**
      * Get test order items.
      *
@@ -396,13 +398,13 @@ class WebhookCest
 
         foreach ($entries as $entry)
         {
-            $detailsField = $this->getProductDetailsField($entry);
+            $detailsHandle = \workingconcept\snipcart\helpers\FieldHelper::getProductInfoFieldHandle($entry);
 
-            $price     = $detailsField->price;
-            $shippable = $detailsField->shippable;
-            $taxable   = $detailsField->taxable;
-            $weight    = $detailsField->weight;
-            $sku       = $detailsField->sku;
+            $price     = $entry->{$detailsHandle}->price;
+            $shippable = $entry->{$detailsHandle}->shippable;
+            $taxable   = $entry->{$detailsHandle}->taxable;
+            $weight    = $entry->{$detailsHandle}->weight;
+            $sku       = $entry->{$detailsHandle}->sku;
 
             $items[] = new Item([
                 'token'        => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
