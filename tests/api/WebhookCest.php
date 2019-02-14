@@ -11,8 +11,6 @@ use GuzzleHttp\Client;
 
 class WebhookCest
 {
-    // TODO: simulate an API outage and make sure exceptions are thrown (and notified) as expected
-
     public $mailhogClient;
 
     // Public Methods
@@ -250,7 +248,7 @@ class WebhookCest
     // TODO: test custom email templates
         // TODO: admin
         // TODO: customer
-    // TODO: test quantity deprecation per configuration
+    // TODO: test quantity adjustment per configuration
 
     // Private Methods
     // =========================================================================
