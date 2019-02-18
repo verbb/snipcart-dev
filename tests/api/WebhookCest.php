@@ -5,6 +5,7 @@ use workingconcept\snipcart\models\Customer;
 use workingconcept\snipcart\models\Order;
 use workingconcept\snipcart\models\Item;
 use workingconcept\snipcart\fields\ProductDetails;
+use workingconcept\snipcart\services\Webhooks;
 use craft\elements\Entry;
 use workingconcept\snipcart\Snipcart;
 use GuzzleHttp\Client;
@@ -28,7 +29,7 @@ class WebhookCest
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => 'foo',
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
             'content'   => $this->getSnipcartOrder()
         ]);
@@ -78,7 +79,7 @@ class WebhookCest
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
             'content'   => null
         ]);
@@ -96,7 +97,7 @@ class WebhookCest
         $I->haveHttpHeader('x-snipcart-requesttoken', 'foobar');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
             'content'   => $this->getSnipcartOrder(),
         ]);
@@ -114,7 +115,7 @@ class WebhookCest
         $I->haveHttpHeader('x-snipcart-requesttoken', '[ 1, 2, 3 ]');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
             'content'   => $this->getSnipcartOrder(),
         ]);
@@ -132,7 +133,7 @@ class WebhookCest
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_SHIPPINGRATES_FETCH,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
             'content'   => $this->getSnipcartOrder(),
         ]);
@@ -156,7 +157,7 @@ class WebhookCest
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_SHIPPINGRATES_FETCH,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
             'content'   => $order,
         ]);
@@ -181,7 +182,7 @@ class WebhookCest
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_SHIPPINGRATES_FETCH,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
             'content'   => $this->getSnipcartOrder($person)
         ]);
@@ -203,7 +204,7 @@ class WebhookCest
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPOST('/actions/snipcart/webhooks/handle', [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
-            'mode'      => WebhooksController::WEBHOOK_MODE_TEST,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
             'content'   => $order
         ]);
@@ -228,6 +229,25 @@ class WebhookCest
         
         $I->assertTrue($containsInvoiceNumber, 'Email contains invoice number.');
         $I->assertTrue($containsShipStationReference, 'Email contains ShipStation ID.');
+    }
+
+    public function testUnknownPayloadProperties(\ApiTester $I)
+    {
+        $order = $this->getSnipcartOrder();
+
+        $order['nonExistentOrderProperty'] = 'foo!';
+        $order['nonExistentOrderPropertyTwo'] = 'foo!';
+        $order['items'][0]['nonExistentItemProperty'] = 'foo!';
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+            'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'   => $order
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
     }
 
     // TODO: make sure ShipStation gets correct weight unit
