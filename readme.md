@@ -1,15 +1,17 @@
 # Snipcart Plugin Test Suite
 
-A barebones test project for making sure the Snipcart plugin behaves itself. BYO Snipcart and ShipStation API keys.
+A barebones test project for kicking the tires of [the Snipcart Craft CMS plugin](https://github.com/workingconcept/snipcart-craft-plugin) and making sure it behaves itself. BYO Snipcart and ShipStation API keys.
+
+![](resources/api-tests.gif)
 
 ## Features
 
-- DDEV config for easy, Dockerized environment spin-up.
+- [DDEV](https://github.com/drud/ddev) config for easy, Dockerized environment spin-up.
 - All email is captured with Mailhog; nothing will be sent out.
-- Shell script for initializing Craft install. 
+- Shell script for initializing Craft install.
 - Content migration for adding Section + fields + demo content.
-- Codeception for tests.
-- Shell script to continually sync local plugin changes.
+- Codeception API and acceptance tests.
+- Shell script to sync local plugin changes into dev container.
 - Barebones configuration and front-end.
 
 ## Goals

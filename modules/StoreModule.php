@@ -1,7 +1,13 @@
 <?php
 namespace modules;
 
+use workingconcept\snipcart\services\Products;
+use workingconcept\snipcart\events\OrderEvent;
+use workingconcept\snipcart\events\InventoryEvent;
+use workingconcept\snipcart\helpers\FieldHelper;
 use Craft;
+use craft\mail\Message;
+use yii\base\Event;
 
 class StoreModule extends \yii\base\Module
 {
@@ -31,6 +37,31 @@ class StoreModule extends \yii\base\Module
         {
             $this->controllerNamespace = 'modules\\controllers';
         }
+
+        /*
+        Event::on(
+            Products::class,
+            Products::EVENT_PRODUCT_INVENTORY_CHANGE,
+            function(InventoryEvent $event) {
+
+                // fetch product detail info regardless of the field handle
+                $productDetails = FieldHelper::getProductInfo($event->entry);
+                
+                // adjusted inventory = current + delta
+                $newQuantity = $productDetails->inventory + $event->quantity;
+
+                // send
+                if ($newQuantity < 10) {
+                    $message = new Message();
+                    $message->setTo('mrmanager@suddenvalley.biz');
+                    $message->setSubject($event->entry->title . ' stock is low!');
+                    $message->setHtmlBody("<p>Re-stock soon! There are {$newQuantity} units left.</p>");
+
+                    Craft::$app->mailer->send($message);
+                }
+            }
+            */
+        );
 
         parent::init();
     }
