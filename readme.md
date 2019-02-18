@@ -10,7 +10,7 @@ A barebones test project for kicking the tires of [the Snipcart Craft CMS plugin
 - All email is captured with Mailhog; nothing will be sent out.
 - Shell script for initializing Craft install.
 - Content migration for adding Section + fields + demo content.
-- Codeception API and acceptance tests.
+- [Codeception](https://codeception.com/) API and acceptance tests.
 - Shell script to sync local plugin changes into dev container.
 - Barebones configuration and front-end.
 
