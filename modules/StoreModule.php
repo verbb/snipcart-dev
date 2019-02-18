@@ -60,8 +60,8 @@ class StoreModule extends \yii\base\Module
                     Craft::$app->mailer->send($message);
                 }
             }
-            */
         );
+        */
 
         parent::init();
     }
