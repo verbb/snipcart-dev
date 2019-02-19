@@ -23,22 +23,6 @@ class ShipStationOrderTest extends \Codeception\Test\Unit
     {
     }
 
-    /**
-     * Switch Craft's email driver to use our local Mailhog instance.
-     */
-    private function setMailhog()
-    {
-        $settings = Craft::$app->getSystemSettings()->getEmailSettings();
-        $settings->transportType = 'craft\mail\transportadapters\Smtp';
-        $settings->transportSettings = [
-            'host' => 'localhost',
-            'useAuthentication' => false,
-            'port' => '1025',
-        ];
-
-        Craft::$app->getSystemSettings()->saveSettings('email', $settings->toArray());
-    }
-
     private function _getLastEmail()
     {
         $client = new Client([

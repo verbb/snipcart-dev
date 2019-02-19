@@ -35,6 +35,13 @@ This will pull composer dependencies, install Craft, and install the Snipcart pl
 
 ## Testing Setup
 
+There are currently two kinds of tests:
+
+1. API tests that send data to the webhook endpoint to evaluate what comes back.
+2. Acceptance tests that actually open a browser and do stuff on pages.
+
+If you want to run the acceptance tests, and *only* if you want to run the acceptance tests, you'll need to either install Selenium and a Chrome driver or configure tests/acceptance.suite.yml to use your own setup.
+
 **1. Install Selenium server and Chrome driver for browser testing.**
 
 Selenium:
