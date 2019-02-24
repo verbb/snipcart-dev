@@ -3,16 +3,25 @@
 use workingconcept\snipcart\controllers\WebhooksController;
 use workingconcept\snipcart\models\Customer;
 use workingconcept\snipcart\models\Order;
+use workingconcept\snipcart\models\Subscription;
 use workingconcept\snipcart\models\Item;
-use workingconcept\snipcart\fields\ProductDetails;
 use workingconcept\snipcart\services\Webhooks;
 use craft\elements\Entry;
-use workingconcept\snipcart\Snipcart;
 use GuzzleHttp\Client;
 
 class WebhookCest
 {
-    public $mailhogClient;
+    // Public Vars
+    // =========================================================================
+
+    // Private Vars
+    // =========================================================================
+
+    /**
+     * @var string Local endpoint we'll use for webhook testing.
+     */
+    private $_webhookEndpoint = 'actions/snipcart/webhooks/handle';
+
 
     // Public Methods
     // =========================================================================
@@ -23,15 +32,16 @@ class WebhookCest
 
     /**
      * Supply a webhook post with an invalid eventName.
+     * @param ApiTester $I
      */
     public function testInvalidEvent(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
-            'eventName' => 'foo',
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName' => 'foo', // not real
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
-            'content'   => $this->getSnipcartOrder()
+            'content'   => $this->_getSnipcartOrder()
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::BAD_REQUEST);
@@ -40,15 +50,16 @@ class WebhookCest
 
     /**
      * Supply a webhook post with an invalid mode.
+     * @param ApiTester $I
      */
     public function testInvalidMode(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
-            'mode'      => 'Special',
+            'mode'      => 'Special', // not 'Live' or 'Test'
             'createdOn' => date('c'),
-            'content'   => $this->getSnipcartOrder()
+            'content'   => $this->_getSnipcartOrder()
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::BAD_REQUEST);
@@ -57,14 +68,17 @@ class WebhookCest
 
     /**
      * Supply a webhook post with a missing mode.
+     * @param ApiTester $I
      */
     public function testMissingMode(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
+            // 'mode'      => Webhooks::WEBHOOK_MODE_TEST,
+            // ^ deliberately left out
             'createdOn' => date('c'),
-            'content'   => $this->getSnipcartOrder()
+            'content'   => $this->_getSnipcartOrder()
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::BAD_REQUEST);
@@ -73,11 +87,12 @@ class WebhookCest
 
     /**
      * Missing content.
+     * @param ApiTester $I
      */
     public function testEmptyContent(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
@@ -90,16 +105,20 @@ class WebhookCest
 
     /**
      * Bad token is rejected even in devMode.
+     *
+     * WARNING: will fail without API credentials since Snipcart API must be
+     * used to validate the token.
+     * @param ApiTester $I
      */
     public function testBadToken(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('x-snipcart-requesttoken', 'foobar');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
-            'content'   => $this->getSnipcartOrder(),
+            'content'   => $this->_getSnipcartOrder(),
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::BAD_REQUEST);
@@ -108,16 +127,20 @@ class WebhookCest
 
     /**
      * Non-string token is rejected even in devMode.
+     *
+     * WARNING: will fail without API credentials since Snipcart API must be
+     * used to validate the token.
+     * @param ApiTester $I
      */
     public function testNonStringToken(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('x-snipcart-requesttoken', '[ 1, 2, 3 ]');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
-            'content'   => $this->getSnipcartOrder(),
+            'content'   => $this->_getSnipcartOrder(),
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::BAD_REQUEST);
@@ -126,16 +149,17 @@ class WebhookCest
     }
 
     /**
-     * Fetch shipping rates for a valid order.
+     * Test `shippingrates.fetch` for a valid order in progress.
+     * @param ApiTester $I
      */
     public function testFetchRates(\ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_SHIPPINGRATES_FETCH,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
-            'content'   => $this->getSnipcartOrder(),
+            'content'   => $this->_getSnipcartOrder(),
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
@@ -144,10 +168,11 @@ class WebhookCest
 
     /**
      * Attempt to fetch rates for an order that doesn't have shippable items.
+     * @param ApiTester $I
      */
     public function testUnshippableOrder(\ApiTester $I)
     {
-        $order = $this->getSnipcartOrder();
+        $order = $this->_getSnipcartOrder();
 
         foreach ($order['items'] as &$item)
         {
@@ -155,7 +180,7 @@ class WebhookCest
         }
 
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_SHIPPINGRATES_FETCH,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'),
@@ -169,22 +194,24 @@ class WebhookCest
     /**
      * Attempt to fetch rates to Canada, even though we only ship to the US.
      * 
-     * Depends on store configuration!
+     * WARNING: Iffy test; depends on store configuration!
+     *
+     * @param ApiTester $I
      */
     public function testInvalidCountryRates(\ApiTester $I)
     {
-        $person = $this->getTestPerson();
+        $person = $this->_getTestPerson();
         $person->billingAddressCountry = 'CA';
         $person->shippingAddressCountry = 'CA';
         $person->billingAddressPostalCode = 'A1A 1A1';
         $person->shippingAddressPostalCode = 'A1A 1A1';
 
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_SHIPPINGRATES_FETCH,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
-            'content'   => $this->getSnipcartOrder($person)
+            'content'   => $this->_getSnipcartOrder($person)
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK); // 200
@@ -192,17 +219,20 @@ class WebhookCest
     }
 
     /**
-     * Test the order completion webhook, which should result in success and
+     * Test the `order.completed` webhook, which should result in success and
      * give us back a ShipStation order ID.
+     *
+     * WARNING: will fail without ShipStation API credentials.
+     * WARNING: will fail if admin email notifications are off.
      *
      * @param ApiTester $I
      */
     public function testOrderCompletion(\ApiTester $I)
     {
-        $order = $this->getSnipcartOrder();
+        $order = $this->_getSnipcartOrder();
 
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
@@ -213,8 +243,7 @@ class WebhookCest
 
         // when devMode = true, order won't actually be sent to ShipStation and we'll get order ID 99999999 in the response
         $I->seeResponseContains('{"success":true,"shipstation_order_id":99999999}');
-        
-        
+
         // TODO: make sure notifications are enabled, otherwise this will fail!
 
         $lastMessage = $this->_getLastEmail();
@@ -231,20 +260,223 @@ class WebhookCest
         $I->assertTrue($containsShipStationReference, 'Email contains ShipStation ID.');
     }
 
+    /**
+     * Send an order payload with expected properties on the root order and a
+     * nested order item. The property should be discarded when the model is
+     * populated instead of throwing an exception.
+     * @param ApiTester $I
+     */
     public function testUnknownPayloadProperties(\ApiTester $I)
     {
-        $order = $this->getSnipcartOrder();
+        $order = $this->_getSnipcartOrder();
 
         $order['nonExistentOrderProperty'] = 'foo!';
         $order['nonExistentOrderPropertyTwo'] = 'foo!';
         $order['items'][0]['nonExistentItemProperty'] = 'foo!';
 
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/actions/snipcart/webhooks/handle', [
+        $I->sendPOST($this->_webhookEndpoint, [
             'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
             'mode'      => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
             'content'   => $order
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `order.status.changed` webhook.
+     * @param ApiTester $I
+     */
+    public function testOrderStatusChanged(\ApiTester $I)
+    {
+        $order = $this->_getSnipcartOrder();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'from'      => 'Disputed',
+            'to'        => 'Shipped',
+            'eventName' => WebhooksController::WEBHOOK_ORDER_STATUS_CHANGED,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'   => $order
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `order.paymentStatus.changed` webhook.
+     * @param ApiTester $I
+     */
+    public function testOrderPaymentStatusChanged(\ApiTester $I)
+    {
+        $order = $this->_getSnipcartOrder();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'from'      => 'Authorized',
+            'to'        => 'Paid',
+            'eventName' => WebhooksController::WEBHOOK_ORDER_PAYMENT_STATUS_CHANGED,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'   => $order
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `order.trackingNumber.changed` webhook.
+     * @param ApiTester $I
+     */
+    public function testOrderTrackingNumberChanged(\ApiTester $I)
+    {
+        $order = $this->_getSnipcartOrder();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'trackingNumber' => '123',
+            'trackingUrl'    => 'http://fedex.com',
+            'eventName'      => WebhooksController::WEBHOOK_ORDER_TRACKING_NUMBER_CHANGED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $order
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `subscription.created` webhook.
+     * @param ApiTester $I
+     */
+    public function testSubscriptionCreated(\ApiTester $I)
+    {
+        $subscription = $this->_getSnipcartSubscription();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_SUBSCRIPTION_CREATED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $subscription
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `subscription.cancelled` webhook.
+     * @param ApiTester $I
+     */
+    public function testSubscriptionCancelled(\ApiTester $I)
+    {
+        $subscription = $this->_getSnipcartSubscription();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_SUBSCRIPTION_CANCELLED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $subscription
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `subscription.paused` webhook.
+     * @param ApiTester $I
+     */
+    public function testSubscriptionPaused(\ApiTester $I)
+    {
+        $subscription = $this->_getSnipcartSubscription();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_SUBSCRIPTION_PAUSED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $subscription
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `subscription.resumed` webhook.
+     * @param ApiTester $I
+     */
+    public function testSubscriptionResumed(\ApiTester $I)
+    {
+        $subscription = $this->_getSnipcartSubscription();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_SUBSCRIPTION_RESUMED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $subscription
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `subscription.invoice.created` webhook.
+     * @param ApiTester $I
+     */
+    public function testSubscriptionInvoiceCreated(\ApiTester $I)
+    {
+        $subscription = $this->_getSnipcartSubscription();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_SUBSCRIPTION_INVOICE_CREATED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $subscription
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    /**
+     * Test `taxes.calculate` webhook.
+     * @param ApiTester $I
+     */
+    public function testTaxesCalculate(\ApiTester $I)
+    {
+        $order = $this->_getSnipcartOrder();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_TAXES_CALCULATE,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $order
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->seeResponseContains('{"taxes":[]}');
+    }
+
+    /**
+     * Test `customauth:customer_updated` webhook.
+     * @param ApiTester $I
+     */
+    public function testCustomerUpdated(\ApiTester $I)
+    {
+        $customer = $this->_getTestPerson();
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_CUSTOMER_UPDATED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => $customer
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
@@ -270,6 +502,7 @@ class WebhookCest
         // TODO: customer
     // TODO: test quantity adjustment per configuration
 
+
     // Private Methods
     // =========================================================================
 
@@ -282,16 +515,16 @@ class WebhookCest
      *
      * @return array Order as an array
      */
-    private function getSnipcartOrder($person = true, $items = true, $asArray = true)
+    private function _getSnipcartOrder($person = true, $items = true, $asArray = true)
     {
         if ($person === true)
         {
-            $person = $this->getTestPerson();
+            $person = $this->_getTestPerson();
         }
 
         if ($items === true)
         {
-            $items = $this->getTestItems(3);
+            $items = $this->_getTestItems(3);
         }
 
         $totalWeight = 0;
@@ -368,11 +601,52 @@ class WebhookCest
     }
 
     /**
+     * Get a fake subscription record.
+     *
+     * @return array Subscription as array
+     */
+    public function _getSnipcartSubscription()
+    {
+        $subscription = new Subscription([
+            'user' => $this->_getTestPerson(),
+            'initialOrderToken' => '1912e4c1-d008-4c15-ab12-fe21a76d30d4',
+            'firstInvoiceReceivedOn' => date('c'),
+            'schedule' => [
+                'interval' => 'Day',
+                'intervalCount' => 1,
+                'trialPeriodInDays' => null,
+                'startsOn' => '2017-10-04T00:00:00Z'
+            ],
+            'itemId' => 'eb52e6e3-d8fa-4db4-b0a9-83c238ae1542',
+            'id' => '2df76eb5-410e-48ac-a130-163ab9377112',
+            'name' => 'A Test Subscription Plan',
+            'creationDate' => date('c'),
+            'modificationDate' => date('c'),
+            'cancelledOn' => null,
+            'amount' => 30,
+            'quantity' => 1,
+            'userDefinedId' => 'TEST_SUBSCRIPTION_PLAN',
+            'totalSpent' => 30,
+            'status' => 'Paid',
+            'gatewayId' => null,
+            'metadata' => null,
+            'cartId' => null,
+            'recurringShipping' => '',
+            'shippingCharged' => false,
+            'nextBillingDate' => '',
+            'upcomingPayments' => '',
+            'invoiceNumber' => 'SNIP-0000',
+        ]);
+
+        return $subscription->toArray([], $subscription->extraFields(), true);
+    }
+
+    /**
      * Get a test person.
      *
      * @return Customer
      */
-    private function getTestPerson()
+    private function _getTestPerson()
     {
         return new Customer([
             'email'                     => 'tobias@actorpull.biz',
@@ -404,7 +678,7 @@ class WebhookCest
      *
      * @return Item[]
      */
-    private function getTestItems($numberOfItems = 3)
+    private function _getTestItems($numberOfItems = 3)
     {
         $entries = Entry::find()
             ->section(['products'])
