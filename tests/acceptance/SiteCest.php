@@ -17,7 +17,7 @@ class SiteCest
     public function homepageWorks(AcceptanceTester $I)
     {
         $I->amOnPage('/');
-        $I->see('Test Site');
+        $I->see('Interweb Shoppe');
         $I->see('Welcome to our store!');
         $I->see('Shopping Cart');
     }
@@ -30,9 +30,11 @@ class SiteCest
      */
     public function productDetailWorks(AcceptanceTester $I)
     {
-        $I->amOnPage('/products/to-slay-mockingbird');
-        $I->see('To Slay a Mockingbird');
-        $I->see('$12.99');
+        $I->amOnPage('/products/oathkeeper');
+        $I->see('Oathkeeper');
+        $I->see('Product is not a toy.');
+        $I->see('Low stock, order now!');
+        $I->see('$2,899.98');
         $I->see('Buy Now');
     }
 }

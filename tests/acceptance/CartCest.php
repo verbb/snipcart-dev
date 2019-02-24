@@ -16,7 +16,7 @@ class CartCest
      */
     public function buyNowWorks(AcceptanceTester $I)
     {
-        $I->amOnPage('/products/to-slay-mockingbird');
+        $I->amOnPage('/products/oathkeeper');
         $I->click(['class' => 'snipcart-add-item']);
 
         // wait for cart modal
@@ -34,8 +34,11 @@ class CartCest
      */
     public function shippingRatesWork(AcceptanceTester $I)
     {
-        $I->amOnPage('/products/to-slay-mockingbird');
+        $I->amOnPage('/products/oathkeeper');
         $I->click(['class' => 'snipcart-add-item']);
+
+        $I->waitForElement('#snipcart-items', 10);
+        $I->see('My cart'); // actual case in element
 
         $I->click('Next step'); // actual case in element
 
