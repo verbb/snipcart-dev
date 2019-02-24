@@ -1,4 +1,4 @@
-# Snipcart Plugin Test Suite
+# Snipcart Plugin Test Project
 
 A barebones test project for kicking the tires of [the Snipcart Craft CMS plugin](https://github.com/workingconcept/snipcart-craft-plugin) and making sure it behaves itself. BYO Snipcart and ShipStation API keys.
 
