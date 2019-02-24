@@ -1,0 +1,31 @@
+{# Tailwind! All of it! :) #}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+<style>
+{# Inter UI #}
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+    html { font-family: 'Inter var', sans-serif; }
+}
+{# custom stuff #}
+body { position: relative; overflow-x: hidden; }
+body::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+    width: 150%;
+    left: -25%;
+    top: 0;
+    background-image: radial-gradient(farthest-corner at -0% 100%, #00a1d5 30%, #4dc0b5 90%);
+    min-height: 36rem;
+}
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav a { color: #fff; }
+.snipcart-total-items { display: inline-block; font-size: 0.75rem; margin-left: 0.25rem; position: relative; top: -1px; padding: 0.125rem 0.35rem; line-height: 1.25; border-radius: 9999px; background: #fff; color: #4dc0b5; }
+.card { transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); will-change: transform; font-smoothing: antialiased; transform-style: preserve-3d; backface-visibility: hidden; transform: translateZ(0) scale(1); }
+.card:hover { transform: scale(1.025); }
+</style>

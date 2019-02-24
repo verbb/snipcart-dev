@@ -2,15 +2,17 @@
 
 {% block main %}
 
-    <section class="max-w-md mx-auto mt-12">
-
-        <p class="text-2xl leading-tight text-gray font-thin mb-12">
-            This horrid little site is for testing the Snipcart plugin.<br>
-            Use it for code examples, not aesthetic inspiration.
+    <section class="max-w-md mx-auto block mt-16 sm:mt-32 mb-16 px-8 lg:px-0">
+        <p class="text-3xl leading-tight text-white font-thin mb-12 leading-normal">
+            Welcome to our store! We pretend to sell fake things so designers and developers can test the <a class="text-white" href="https://workingconcept.com/plugins/snipcart" target="_blank">Snipcart plugin for Craft&nbsp;CMS</a>.
         </p>
+    </section>
 
-        <h1>{{ "Products"|t }}</h1>
 
+    <section class="max-w-md mx-auto mt-12 px-8 md:px-0">
+        <h2 class="text-black font-bold text-md">
+            {{- "Products"|t -}}
+        </h2>
         {% include "_parts/product-list" %}
     </section>
 

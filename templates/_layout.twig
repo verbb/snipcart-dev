@@ -1,33 +1,42 @@
 <html>
 <head>
     <title>{{ pageTitle ?? siteName }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    {% include "_parts/embedded-styles" %}
 </head>
 <body>
     {% block header %}
-    <header class="mx-auto max-w-md mt-6">
-        <a class="text-black text-2xl no-underline" href="{{ siteUrl }}">
-            {{- siteName -}}
-        </a>
-    </header>
-    {% endblock %}
+        <header class="px-8 pt-8 flex w-full">
+            <a class="text-white text-2xl underline w-1/2" href="{{ siteUrl }}">
+                {{- siteName -}}
+            </a>
 
-    {% block nav %}
-    <nav class="mx-auto max-w-md mt-6">
-        <ul class="list-reset">
-            <li class="inline-block mr-4">
-                <a href="{{ siteUrl }}">
-                    {{ "Home"|t }}
-                </a>
-            </li>
-            <li class="inline-block mr-4">
-                {{ craft.snipcart.cartLink }}
-            </li>
-        </ul>
-    </nav>
+            {% block nav %}
+            <nav class="sm:mt-2 w-1/2 text-right">
+                <ul class="list-reset">
+                    <li class="inline-block py-2 sm:py-0 sm:mr-4">
+                        <a href="{{ siteUrl }}">
+                            {{ "Home"|t }}
+                        </a>
+                    </li>
+                    <li class="inline-block">
+                        {{ craft.snipcart.cartLink }}
+                    </li>
+                </ul>
+            </nav>
+            {% endblock %}
+        </header>
     {% endblock %}
 
     {% block main %}
+    {% endblock %}
+
+    {% block footer %}
+        <footer class="max-w-md mx-auto my-24 relative text-center px-8 md:px-0">
+            <div class="font-light">
+                <a class="block p-2 md:px-6 md:inline-block" href="https://workingconcept.com/plugins/snipcart" target="_blank">Snipcart Craft CMS plugin</a>
+                <a class="block p-2 md:px-6 md:inline-block" href="https://workingconcept.com" target="_blank">Working Concept</a>
+            </div>
+        </footer>
     {% endblock %}
 
     {{ craft.snipcart.cartSnippet(true, '', true) }}

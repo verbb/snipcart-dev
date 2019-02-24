@@ -2,7 +2,9 @@
 
 A barebones test project for kicking the tires of [the Snipcart Craft CMS plugin](https://github.com/workingconcept/snipcart-craft-plugin) and making sure it behaves itself. BYO Snipcart and ShipStation API keys.
 
-![Running API tests to check webhooks.](resources/api-tests.gif)
+![Example/testing site.](resources/site-screenshot.png)
+
+![Webhook API tests.](resources/api-test.png)
 
 ## Features
 
@@ -24,6 +26,8 @@ A barebones test project for kicking the tires of [the Snipcart Craft CMS plugin
 
 ## Initial Setup
 
+You can get this running in whatever environment you're used to. It's preconfigured for DDEV for fast spin-up.
+
 [Install DDEV](https://ddev.readthedocs.io/en/stable/#installation), start the site with `ddev start`, and run the setup script from inside the container:
 
 ```shell
@@ -32,6 +36,10 @@ ddev ssh
 ```
 
 This will pull composer dependencies, install Craft, and install the Snipcart plugin. The site will be available at https://snipcart-test.ddev.local, and Mailhog will be running at http://snipcart-test.ddev.local:8025.
+
+Log into the control panel at https://snipcart-test.ddev.local/admin with username and password `supersecret`.
+
+Run the content migration separately to populate a Products section with fields and fake Entries.
 
 ## Testing Setup
 

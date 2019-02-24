@@ -12,9 +12,7 @@ if [ ! -d "storage" ]; then
 fi
 
 # install Craft
-php craft install --email=nobody@example.com --username=supersecret --password=supersecret --siteName="Test Site" --siteUrl=SITE_URL --language=en-US
+php craft install --email=nobody@example.com --username=supersecret --password=supersecret --siteName="Interweb Shoppe" --siteUrl=SITE_URL --language=en-US
 
 # install Snipcart plugin
 php craft install/plugin snipcart
-
-# TODO: configure plugin

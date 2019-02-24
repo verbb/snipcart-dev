@@ -18,7 +18,7 @@ class SiteCest
     {
         $I->amOnPage('/');
         $I->see('Test Site');
-        $I->see('horrid little site');
+        $I->see('Welcome to our store!');
         $I->see('Shopping Cart');
     }
 
