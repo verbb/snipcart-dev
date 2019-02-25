@@ -597,7 +597,18 @@ class WebhookCest
             'items' => $items,
         ]);
 
-        return $order->toArray([], $order->extraFields(), true);
+        $orderArray = $order->toArray([], $order->extraFields(), true);
+
+        if (isset($orderArray['cpUrl']))
+        {
+            /**
+             * Remove read-only property that would throw an exception
+             * if we tried to set it.
+             */
+            unset($orderArray['cpUrl']);
+        }
+
+        return $orderArray;
     }
 
     /**
@@ -638,7 +649,18 @@ class WebhookCest
             'invoiceNumber' => 'SNIP-0000',
         ]);
 
-        return $subscription->toArray([], $subscription->extraFields(), true);
+        $subscriptionArray = $subscription->toArray([], $subscription->extraFields(), true);
+
+        if (isset($subscriptionArray['cpUrl']))
+        {
+            /**
+             * Remove read-only property that would throw an exception
+             * if we tried to set it.
+             */
+            unset($subscriptionArray['cpUrl']);
+        }
+
+        return $subscriptionArray;
     }
 
     /**
