@@ -158,8 +158,7 @@ class m190212_225156_test_products extends Migration
             Craft::dd($defaultEntryType->getErrors());
         }
 
-
-        $products->setEntryTypes([ $defaultEntryType ]);
+        Craft::$app->getSections()->saveEntryType($defaultEntryType);
 
         if ( ! Craft::$app->getSections()->saveSection($products))
         {

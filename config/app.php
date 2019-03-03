@@ -7,7 +7,15 @@ return [
     'bootstrap' => ['store-module'],
     'components' => [
         'mailer' => function() {
-            $settings = \craft\helpers\App::mailSettings();
+            if (\workingconcept\snipcart\helpers\VersionHelper::isCraft31())
+            {
+                $settings = \craft\helpers\App::mailSettings();
+            }
+            else
+            {
+                $settings = Craft::$app->getSystemSettings()->getEmailSettings();
+            }
+
             $settings->transportType = \craft\mail\transportadapters\Smtp::class;
             $settings->transportSettings = [
                 'host' => 'localhost',
