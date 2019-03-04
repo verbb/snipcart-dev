@@ -61,8 +61,11 @@ class m190212_225156_test_products extends Migration
         $productDetailsField->required = true;
         $productDetailsField->defaultWeightUnit = ProductDetailsModel::WEIGHT_UNIT_POUNDS;
         $productDetailsField->defaultDimensionsUnit = ProductDetailsModel::DIMENSIONS_UNIT_INCHES;
-        $productDetailsField->defaultTaxable = false;
+        $productDetailsField->defaultTaxable = true;
         $productDetailsField->defaultShippable = true;
+        $productDetailsField->displayInventory = true;
+        $productDetailsField->displayTaxableSwitch = true;
+        $productDetailsField->displayShippableSwitch = true;
 
         Craft::$app->getFields()->saveField($productDetailsField);
 
