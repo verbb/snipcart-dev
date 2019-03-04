@@ -109,6 +109,8 @@ Inspect emails from testing at http://snipcart-test.ddev.local:8025.
 
 ## Local Plugin + DDEV
 
+This project is set up for testing and making live, local edits to the plugin source. You can edit composer.json like you normally would to have composer download a specific version of the plugin to /vendor, or you can use the existing setup to sync another local directory on your machine as detailed below.
+
 **1. Make sure to require plugin at `@dev` version in composer.json.**
 
 ```json
