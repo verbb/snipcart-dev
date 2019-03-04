@@ -77,6 +77,12 @@ selenium-server
 
 ## Testing
 
+Webhook/API tests require specific configuration to fully pass. These gotchas are documented with `WARNING` notes in [tests/api/WebhookCest.php](tests/api/WebhookCest.php). Requirements include...
+
+- Setting valid Snipcart and ShipStation API keys.
+- Completing all required ShipStation and Ship From fields.
+- Enabling admin order email notifications with one email address.
+
 Run tests **from inside DDEV container** (`ddev exec [command]` or `ddev ssh`):
 
 ```shell
