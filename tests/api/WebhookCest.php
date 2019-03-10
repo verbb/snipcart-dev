@@ -585,6 +585,7 @@ class WebhookCest
             ],
             'shippingAddressSameAsBilling' => true,
             'creditCardLast4Digits' => null,
+            'shippingMethod' => 'UPS Ground',
             'shippingFees' => 5,
             'taxableTotal' => 0,
             'taxesTotal' => 0,
