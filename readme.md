@@ -152,4 +152,4 @@ composer update
 1. install ngrok with homebrew (`brew cask install ngrok`)
 2. create ngrok account at ngrok.io
 3. issue the offered `ngrok authtoken` command
-4. `ngrok http 32770` (where 32770 is the project's web container port `docker ps | grep nginx`)
+4. `ngrok http 32770` (where 32770 is the project's web container port `docker ps | grep -- ddev-snipcart-test-web`)
