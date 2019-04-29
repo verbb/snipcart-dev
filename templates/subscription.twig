@@ -1,0 +1,30 @@
+{% extends "_layout" %}
+
+{% block main %}
+    <section class="max-w-md mx-auto block mt-16 sm:mt-32 mb-16 px-8 lg:px-0">
+
+        <h1 class="text-5xl font-medium pt-6 pb-2">
+            {{ "Nothing of the Month Club"|t }}
+        </h1>
+
+        <div class="text-white text-2xl leading-normal my-8">
+            Get absolutely nothing at all delivered once a month for only $5! Free shipping!
+        </div>
+
+        <div class="relative bg-white rounded shadow p-8">
+            <button class="snipcart-add-item inline-block px-4 py-2 rounded border border-blue no-underline bg-blue text-white hover:bg-blue-dark hover:no-underline hover:border-blue-dark"
+                data-item-name="Nothing of the Month Subscription"
+                data-item-id="nothing-subscription"
+                data-item-url="{{ siteUrl('subscription') }}"
+                data-item-price="5.00"
+                data-item-max-quantity="1"
+                data-item-shippable="false"
+                data-item-payment-interval="Month"
+                data-item-payment-interval-count="1"
+                data-item-payment-trial="10">
+                Subscribe now!
+            </button>
+        </div>
+
+    </section>
+{% endblock %}
