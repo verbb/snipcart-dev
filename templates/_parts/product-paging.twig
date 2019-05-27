@@ -1,0 +1,22 @@
+<div class="max-w-md mx-auto mt-12 px-8 md:px-0 flex">
+    <div class="w-1/2">
+        <a class="hover:text-grey-dark hover:no-underline leading-none text-grey" href="{{ prev.url ?? siteUrl }}">
+            <svg class="fill-current hidden sm:inline-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            <div class="relative inline-block" style="top: -0.35rem;">
+                {{- prev.title ?? "Home" -}}
+            </div>
+        </a>
+    </div>
+    <div class="w-1/2 text-right">
+        <a class="hover:text-grey-dark hover:no-underline leading-none text-grey" href="{{ next.url ?? siteUrl }}">
+            <div class="relative inline-block" style="top: -0.35rem;">
+                {{- next.title ?? "Home" -}}
+            </div>
+            <svg class="fill-current hidden sm:inline-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
+            </svg>
+        </a>
+    </div>
+</div>

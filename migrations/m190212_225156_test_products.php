@@ -13,6 +13,7 @@ use craft\models\FieldGroup;
 use craft\models\FieldLayoutTab;
 use workingconcept\snipcart\fields\ProductDetails;
 use workingconcept\snipcart\models\ProductDetails as ProductDetailsModel;
+use craft\helpers\StringHelper;
 
 /**
  * m190212_225156_test_products migration.
@@ -57,7 +58,8 @@ class m190212_225156_test_products extends Migration
         $productDetailsField->groupId = $productFieldGroup->id;
         $productDetailsField->name = 'Product Details';
         $productDetailsField->handle = 'productDetails';
-        $productDetailsField->instructions = "Add critical store details here.";
+        $productDetailsField->uid = StringHelper::UUID();
+        $productDetailsField->instructions = 'Define product details here.';
         $productDetailsField->required = true;
         $productDetailsField->defaultWeightUnit = ProductDetailsModel::WEIGHT_UNIT_POUNDS;
         $productDetailsField->defaultDimensionsUnit = ProductDetailsModel::DIMENSIONS_UNIT_INCHES;
@@ -90,7 +92,7 @@ class m190212_225156_test_products extends Migration
         $productOptionsField->groupId = $productFieldGroup->id;
         $productOptionsField->name = 'Product Options';
         $productOptionsField->handle = 'productOptions';
-        $productOptionsField->instructions = "Optionally add product options and the how each should impact the base price (if at all).";
+        $productOptionsField->instructions = 'Optionally add product options and the how each should impact the base price (if at all).';
         $productOptionsField->required = false;
         $productOptionsField->columns = [
             [

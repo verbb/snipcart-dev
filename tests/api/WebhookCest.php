@@ -218,6 +218,12 @@ class WebhookCest
         $I->seeResponseContains('"rates":[]');
     }
 
+    // TODO: test quantity adjustment per configuration
+
+//    public function testMatrixQuantityDecrement(\ApiTester $I) {}
+//    public function testQuantityDecrement(\ApiTester $I) {}
+
+
     /**
      * Test the `order.completed` webhook, which should result in success and
      * give us back a ShipStation order ID.
@@ -259,6 +265,133 @@ class WebhookCest
         $I->assertTrue($containsInvoiceNumber, 'Email contains invoice number.');
         $I->assertTrue($containsShipStationReference, 'Email contains ShipStation ID.');
     }
+
+    /**
+     * Test the `order.completed` webhook with Product Details on a Matrix field,
+     * which should result in success and give us back a ShipStation order ID.
+     *
+     * WARNING: will fail without ShipStation API credentials.
+     * WARNING: will fail if admin email notifications are off.
+     *
+     * @param ApiTester $I
+     */
+    public function testMatrixProductOrderCompletion(\ApiTester $I)
+    {
+        $person = $this->_getTestPerson();
+        $items = [ $this->_getMatrixTestItem() ];
+
+        $totalWeight = 0;
+        $grandTotal = 0;
+        $itemsTotal = 0;
+
+        foreach ($items as $item)
+        {
+            $totalWeight += $item->totalWeight;
+            $grandTotal += $item->price;
+            $itemsTotal += $item->quantity;
+        }
+
+        $order = new Order([
+            'invoiceNumber' => 'SNIP-' . $this->_generateRandomString(6),
+            'token' => 'befd6350-1efc-43f3-b605-86bad6fb74aG',
+            'creationDate' => date('c'),
+            'modificationDate' => date('c'),
+            'status' => 'InProgress',
+            'email' => $person->email,
+            'billingAddressName'       => $person->billingAddressName,
+            'billingAddressAddress1'   => $person->billingAddressAddress1,
+            'billingAddressAddress2'   => $person->billingAddressAddress2,
+            'billingAddressCity'       => $person->billingAddressCity,
+            'billingAddressProvince'   => $person->billingAddressProvince,
+            'billingAddressPostalCode' => $person->billingAddressPostalCode,
+            'billingAddressCountry'    => $person->billingAddressCountry,
+            'billingAddressPhone'      => $person->billingAddressPhone,
+            'billingAddress'           => [
+                'fullName'   => $person->billingAddressName,
+                'name'       => $person->billingAddressName,
+                'address1'   => $person->billingAddressAddress1,
+                'address2'   => $person->billingAddressAddress2,
+                'city'       => $person->billingAddressCity,
+                'province'   => $person->billingAddressProvince,
+                'postalCode' => $person->billingAddressPostalCode,
+                'country'    => $person->billingAddressCountry,
+                'phone'      => $person->billingAddressPhone,
+            ],
+            'shippingAddressName'       => $person->shippingAddressName,
+            'shippingAddressAddress1'   => $person->shippingAddressAddress1,
+            'shippingAddressAddress2'   => $person->shippingAddressAddress2,
+            'shippingAddressCity'       => $person->shippingAddressCity,
+            'shippingAddressProvince'   => $person->shippingAddressProvince,
+            'shippingAddressPostalCode' => $person->shippingAddressPostalCode,
+            'shippingAddressCountry'    => $person->shippingAddressCountry,
+            'shippingAddressPhone'      => $person->shippingAddressPhone,
+            'shippingAddress'           => [
+                'fullName'   => $person->shippingAddressName,
+                'name'       => $person->shippingAddressName,
+                'address1'   => $person->shippingAddressAddress1,
+                'address2'   => $person->shippingAddressAddress2,
+                'city'       => $person->shippingAddressCity,
+                'province'   => $person->shippingAddressProvince,
+                'postalCode' => $person->shippingAddressPostalCode,
+                'country'    => $person->shippingAddressCountry,
+                'phone'      => $person->shippingAddressPhone,
+            ],
+            'shippingAddressSameAsBilling' => true,
+            'creditCardLast4Digits' => null,
+            'shippingMethod' => 'UPS Ground',
+            'shippingFees' => 5,
+            'taxableTotal' => 0,
+            'taxesTotal' => 0,
+            'itemsTotal' => $itemsTotal,
+            'totalWeight' => $totalWeight,
+            'grandTotal' => $grandTotal,
+            'finalGrandTotal' => $grandTotal,
+            'ipAddress' => '0.0.0.0',
+            'userAgent' => 'test',
+            'items' => $items,
+        ]);
+
+        $orderArray = $order->toArray([], $order->extraFields(), true);
+
+        if (isset($orderArray['cpUrl']))
+        {
+            /**
+             * Remove read-only property that would throw an exception
+             * if we tried to set it.
+             */
+            unset($orderArray['cpUrl']);
+        }
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'   => $orderArray
+        ]);
+
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+
+        // when devMode = true, order won't actually be sent to ShipStation and we'll get order ID 99999999 in the response
+        $I->seeResponseContains('{"success":true,"shipstation_order_id":99999999}');
+
+        // TODO: make sure notifications are enabled, otherwise this will fail!
+
+        $lastMessage = $this->_getLastEmail();
+
+        $I->assertTrue($lastMessage !== null, 'Fetched last email.');
+
+        $lastMessageBody = $lastMessage->Content->Body;
+        $lastMessageDateString = $lastMessage->Content->Headers->Date[0]; // "Wed, 19 Dec 2018 14:32:47 -0800"
+
+        $containsInvoiceNumber = strpos((string)$lastMessageBody, $order['invoiceNumber']) !== false;
+        $containsShipStationReference = strpos((string)$lastMessageBody, 'ShipStation #') !== false;
+
+        $I->assertTrue($containsInvoiceNumber, 'Email contains invoice number.');
+        $I->assertTrue($containsShipStationReference, 'Email contains ShipStation ID.');
+    }
+
 
     /**
      * Send an order payload with expected properties on the root order and a
@@ -500,7 +633,6 @@ class WebhookCest
     // TODO: test custom email templates
         // TODO: admin
         // TODO: customer
-    // TODO: test quantity adjustment per configuration
 
 
     // Private Methods
@@ -694,18 +826,63 @@ class WebhookCest
         ]);
     }
 
+    private function _getMatrixTestItem()
+    {
+        $entry = Entry::find()
+            ->section(['products'])
+            ->type('complexProducts')
+            ->one();
+
+        foreach ($entry->pageBlocks as $pageBlock)
+        {
+            // TODO: don't use hardcoded field values
+
+            if (isset($pageBlock->productInfo))
+            {
+                $item = new Item([
+                    'token'        => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                    'name'         => $pageBlock->productName ?? 'Unnamed Item',
+                    'price'        => $pageBlock->productInfo->price,
+                    'quantity'     => 1,
+                    'url'          => $entry->url,
+                    'id'           => $pageBlock->productInfo->sku,
+                    'shippable'    => $pageBlock->productInfo->shippable,
+                    'taxable'      => $pageBlock->productInfo->taxable,
+                    'weight'       => $pageBlock->productInfo->weight,
+                    'totalWeight'  => $pageBlock->productInfo->weight,
+                    'uniqueId'     => $pageBlock->productInfo->sku,
+                    'customFields' => [
+                        [
+                            'name'         => 'customOption',
+                            'displayValue' => 'Custom Option',
+                            'type'         => 'dropdown',
+                            'value'        => 'Option A',
+                        ],
+                    ],
+                    'unitPrice' => $pageBlock->productInfo->price,
+                ]);
+
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Get test order items.
      *
-     * @param int $numberOfItems Number of items to return.
+     * @param int    $numberOfItems Number of items to return.
+     * @param string $type          Entry type (`products` or `complexProducts`)
      *
      * @return Item[]
      */
-    private function _getTestItems($numberOfItems = 3)
+    private function _getTestItems($numberOfItems = 3, $type = 'products')
     {
         $entries = Entry::find()
             ->section(['products'])
             ->limit($numberOfItems)
+            ->type($type)
             ->orderBy('RAND()')
             ->all();
         

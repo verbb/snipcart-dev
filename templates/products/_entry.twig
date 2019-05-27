@@ -17,7 +17,7 @@
 ] %}
 
 {# get product details regardless of field handle #}
-{% set productInfo = craft.snipcart.getProductInfo(entry) %}
+{% set productInfo = craft.snipcart.getProductInfo(entry) ?? null %}
 {% set formattedOptions = [] %}
 
 {# if we have an options table, format an array for getBuyNowButton() #}
@@ -34,8 +34,8 @@
     {% endfor %}
 {% endif %}
 
+{# set up prev/next pagination #}
 {% set params = craft.entries.section('products').orderBy('id asc').limit(null) %}
-
 {% set prevEntry = entry.getPrev(params) %}
 {% set nextEntry = entry.getNext(params) %}
 
@@ -45,66 +45,76 @@
             {{- entry.title -}}
         </h1>
 
-        {% if productInfo.price -%}
-            <p class="font-bold text-white">
-                {{ productInfo.price | currency }}
-                {% if productInfo.inventory < 10 %}
-                    <span class="text-red-dark text-sm ml-2">Low stock, order now!</span>
-                {% endif %}
-            </p>
-        {%- endif %}
+        {% if productInfo is not null %}
+            {# display details for a product defined directly on the Entry #}
+            {% if productInfo.price -%}
+                <p class="font-bold text-white">
+                    {{ productInfo.price | currency }}
+                    {% if productInfo.inventory < 10 %}
+                        <span class="text-red-dark text-sm ml-2">Low stock, order now!</span>
+                    {% endif %}
+                </p>
+            {%- endif %}
 
-        <div class="text-white text-2xl leading-normal my-8">
-            {{ entry.productDescription | markdown }}
-        </div>
-
-        <div class="relative bg-white rounded shadow p-8">
-            <div class="inline-block text-xs text-grey py-1 px-2 text-right bg-white shadow absolute pin-t pin-r -mt-2 mr-8">Example</div>
-            <p class="text-grey text-xs mb-8 leading-tight">Example buy buttons because the markup is important.</p>
-            <div class="mt-0">
-                <p class="text-sm pt-2 border-t border-grey-light">This is a really plain button.</p>
-
-                {{ productInfo.getBuyNowButton({
-                    classes: buttonClasses
-                }) | raw }}
+            <div class="text-white text-2xl leading-normal my-8">
+                {{ entry.productDescription | markdown }}
             </div>
 
-            <div class="row mt-8">
-                <p class="text-sm pt-2 border-t border-grey-light">This button includes <a href="https://snipcart.docs.workingconcept.com/templating/fields.html" target="_blank">custom options</a> from a Table field, if the product has them.</p>
+            <div class="relative bg-white rounded shadow p-8">
+                <div class="inline-block text-xs text-grey py-1 px-2 text-right bg-white shadow absolute pin-t pin-r -mt-2 mr-8">Example</div>
+                <p class="text-grey text-xs mb-8 leading-tight">Example buy buttons because the markup is important.</p>
+                <div class="mt-0">
+                    <p class="text-sm pt-2 border-t border-grey-light">This is a really plain button.</p>
 
-                {{ productInfo.getBuyNowButton({
-                    text: 'Buy Now + Options',
-                    customOptions: formattedOptions ? [{
-                        name: 'Product Option',
-                        required: true,
-                        options: formattedOptions
-                    }] : null,
-                    classes: buttonClasses
-                }) | raw }}
+                    {{ productInfo.getBuyNowButton({
+                        classes: buttonClasses
+                    }) | raw }}
+                </div>
+
+                <div class="row mt-8">
+                    <p class="text-sm pt-2 border-t border-grey-light">This button includes <a href="https://snipcart.docs.workingconcept.com/templating/fields.html" target="_blank">custom options</a> from a Table field, if the product has them.</p>
+
+                    {{ productInfo.getBuyNowButton({
+                        text: 'Buy Now + Options',
+                        customOptions: formattedOptions ? [{
+                            name: 'Product Option',
+                            required: true,
+                            options: formattedOptions
+                        }] : null,
+                        classes: buttonClasses
+                    }) | raw }}
+                </div>
             </div>
-        </div>
+        {% elseif entry.pageBlocks is defined and entry.pageBlocks | length %}
+            {# display Matrix blocks which may include individual product details #}
+            <div class="relative bg-white rounded shadow p-8 mt-8">
+                {% for block in entry.pageBlocks %}
+                    {% if block.type == 'heading' %}
+                        <h2>
+                            {{- block.heading -}}
+                        </h2>
+                    {% elseif block.type == 'product' %}
+                        <div class="mt-8">
+                            {% if block.productName %}
+                                <h3 class="border-b">
+                                    {{- block.productName -}}
+                                </h3>
+                            {% endif %}
+
+                            {{ block.productInfo.getBuyNowButton({
+                                name: block.productName,
+                                text: 'Buy for ' ~ (block.productInfo.price | currency),
+                                classes: buttonClasses
+                            }) | raw }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </section>
 
-    <div class="max-w-md mx-auto mt-12 px-8 md:px-0 flex">
-        <div class="w-1/2">
-            <a class="hover:text-grey-dark hover:no-underline leading-none text-grey" href="{{ prevEntry.url ?? siteUrl }}">
-                <svg class="fill-current hidden sm:inline-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                </svg>
-                <div class="relative inline-block" style="top: -0.35rem;">
-                    {{- prevEntry.title ?? "Home" -}}
-                </div>
-            </a>
-        </div>
-        <div class="w-1/2 text-right">
-            <a class="hover:text-grey-dark hover:no-underline leading-none text-grey" href="{{ nextEntry.url ?? siteUrl }}">
-                <div class="relative inline-block" style="top: -0.35rem;">
-                    {{- nextEntry.title ?? "Home" -}}
-                </div>
-                <svg class="fill-current hidden sm:inline-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
-                </svg>
-            </a>
-        </div>
-    </div>
+    {% include "_parts/product-paging" with {
+        prev: prevEntry,
+        next: nextEntry
+    } %}
 {% endblock %}
