@@ -21,6 +21,8 @@
         }
     },
     "scripts": {
+        "test-api": "./vendor/codeception/codeception/codecept run api",
+        "test-browser": "./vendor/codeception/codeception/codecept run acceptance"
     },
     "repositories": [
         {

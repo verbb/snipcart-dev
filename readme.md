@@ -83,18 +83,18 @@ Webhook/API tests require specific configuration to fully pass. These gotchas ar
 - Completing all required ShipStation and Ship From fields.
 - Enabling admin order email notifications with one email address.
 
-Run tests **from inside DDEV container** (`ddev exec [command]` or `ddev ssh`):
+Run tests **from inside DDEV container** (`ddev ssh`, then run):
 
 ```shell
-ddev exec ./vendor/codeception/codeception/codecept run api
+composer test-api
 ```
 
 If there's a 500 response or something mysterious that could use more detail, run with the `--debug` flag.
 
-Run tests **from outside DDEV container**:
+Run browser tests **from outside DDEV container**:
 
 ```shell
-./vendor/codeception/codeception/codecept run acceptance
+composer test-browser
 ```
 
 Work with testing container locally:
