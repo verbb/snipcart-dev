@@ -11,7 +11,7 @@ A barebones test project for kicking the tires of [the Snipcart Craft CMS plugin
 - [DDEV](https://github.com/drud/ddev) config for easy, Dockerized environment spin-up.
 - All email is captured with Mailhog; nothing will be sent out.
 - Shell script for initializing Craft install.
-- Content migration for adding Section + fields + demo content.
+- Content migration for adding Section, Fields and demo content.
 - [Codeception](https://codeception.com/) API and acceptance tests.
 - Shell script to sync local plugin changes into dev container.
 - Barebones configuration and front-end.
