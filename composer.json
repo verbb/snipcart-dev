@@ -1,8 +1,8 @@
 {
     "require": {
         "php": "^7.0.0",
-        "craftcms/cms": "dev-develop as 3.1.19-alpha.1",
-        "craftcms/webhooks": "dev-develop as 2.0.0-alpha.1",
+        "craftcms/cms": "^3.3.0",
+        "craftcms/webhooks": "^2.0",
         "workingconcept/craft-snipcart": "@dev",
         "vlucas/phpdotenv": "^2.4.0"
     },
