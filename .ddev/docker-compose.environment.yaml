@@ -4,7 +4,7 @@ services:
   web:
     environment:
       - ENVIRONMENT=dev
-      - SITE_URL=https://snipcart-test.ddev.local
+      - SITE_URL=https://snipcart-test.ddev.site
       - SECURITY_KEY=12345
       - DB_DRIVER=mysql
       - DB_SERVER=db
