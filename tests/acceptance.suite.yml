@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: 'https://snipcart-test.ddev.local/'
+            url: 'https://snipcart-test.ddev.site/'
             browser: 'chrome' # 'chrome' or 'firefox'
             window_size: 1200x900
             capabilities:
@@ -16,5 +16,5 @@ modules:
                     args:
                     - '--ignore-certificate-errors'
         # - PhpBrowser:
-        #     url: 'https://snipcart-test.ddev.local/'
+        #     url: 'https://snipcart-test.ddev.site/'
         - \Helper\Acceptance

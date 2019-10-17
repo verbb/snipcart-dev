@@ -928,7 +928,7 @@ class WebhookCest
     private function _getLastEmail()
     {
         $client = new Client([
-            'base_uri' => 'http://snipcart-test.ddev.local:8025/'
+            'base_uri' => 'http://snipcart-test.ddev.site:8025/'
         ]);
 
         $response = $client->get('/api/v2/messages');

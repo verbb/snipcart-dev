@@ -4,5 +4,5 @@ modules:
         - Asserts
         - \Helper\Api
         - REST:
-            url: http://snipcart-test.ddev.local/
+            url: http://snipcart-test.ddev.site/
             depends: PhpBrowser

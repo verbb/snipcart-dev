@@ -35,9 +35,9 @@ ddev ssh
 ./scripts/setup.sh
 ```
 
-This will pull composer dependencies, install Craft, and install the Snipcart plugin. The site will be available at https://snipcart-test.ddev.local, and Mailhog will be running at http://snipcart-test.ddev.local:8025.
+This will pull composer dependencies, install Craft, and install the Snipcart plugin. The site will be available at https://snipcart-test.ddev.site, and Mailhog will be running at http://snipcart-test.ddev.site:8025.
 
-Log into the control panel at https://snipcart-test.ddev.local/admin with username and password `supersecret`.
+Log into the control panel at https://snipcart-test.ddev.site/admin with username and password `supersecret`.
 
 Run the content migration separately to populate a Products section with fields and fake Entries.
 
@@ -105,7 +105,7 @@ docker ps
 docker exec -it [container-id] bash
 ```
 
-Inspect emails from testing at http://snipcart-test.ddev.local:8025.
+Inspect emails from testing at http://snipcart-test.ddev.site:8025.
 
 ## Local Plugin + DDEV
 
