@@ -4,9 +4,24 @@ paths:
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
-actor_suffix: Tester
 settings:
   bootstrap: _bootstrap.php
+params:
+  - .env
+modules:
+  config:
+    \craft\test\Craft:
+      configFile: 'tests/_craft/config/test.php'
+      entryUrl: 'https://snipcart-test.ddev.site/index.php'
+      projectConfig: {}
+      migrations: []
+      plugins: []
+      cleanup: true
+      transaction: true
+      dbSetup: {clean: true, setupCraft: true}
+  enabed:
+    - \craft\test\Craft
+actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
