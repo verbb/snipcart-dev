@@ -833,7 +833,7 @@ class WebhookCest
             ->type('complexProducts')
             ->one();
 
-        foreach ($entry->pageBlocks as $pageBlock)
+        foreach ($entry->pageBlocks->all() as $pageBlock)
         {
             // TODO: don't use hardcoded field values
 
@@ -938,7 +938,7 @@ class WebhookCest
         return $messages[0] ?? null;
     }
 
-    function _generateRandomString($length = 10) 
+    private function _generateRandomString($length = 10): string
     {
         $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -950,6 +950,51 @@ class WebhookCest
         }
 
         return $randomString;
+    }
+
+    private function _getTestGqlQuery(): string
+    {
+        return '
+            { 
+                entries(section: "products") {
+                    title
+                    ... on products_products_Entry {
+                        productDetails {
+                            sku
+                            price
+                            shippable
+                            taxable
+                            weight
+                            weightUnit
+                            length
+                            width
+                            height
+                            dimensionsUnit
+                            inventory
+                        }
+                    }
+                    ... on products_complexProducts_Entry {
+                        pageBlocks {
+                            ... on pageBlocks_product_BlockType {
+                                productInfo {
+                                    sku
+                                    price
+                                    shippable
+                                    taxable
+                                    weight
+                                    weightUnit
+                                    length
+                                    width
+                                    height
+                                    dimensionsUnit
+                                    inventory
+                                }
+                            }
+                        }
+                    }
+                }  
+            }
+        ';
     }
 
 }
