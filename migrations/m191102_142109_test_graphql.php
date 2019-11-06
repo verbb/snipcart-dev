@@ -25,6 +25,9 @@ class m191102_142109_test_graphql extends Migration
         $testSchema->scope = $this->_getSchemaScope();
 
         Craft::$app->getGql()->saveSchema($testSchema);
+
+        // for GraphQL feature
+        Craft::$app->setEdition(Craft::Pro);
     }
 
     /**

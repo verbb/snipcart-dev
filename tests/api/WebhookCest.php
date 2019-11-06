@@ -8,6 +8,7 @@ use workingconcept\snipcart\models\Item;
 use workingconcept\snipcart\services\Webhooks;
 use craft\elements\Entry;
 use GuzzleHttp\Client;
+use Codeception\Util\HttpCode;
 
 class WebhookCest
 {
@@ -21,6 +22,11 @@ class WebhookCest
      * @var string Local endpoint we'll use for webhook testing.
      */
     private $_webhookEndpoint = 'actions/snipcart/webhooks/handle';
+
+    /**
+     * @var string Local GraphQL endpoint.
+     */
+    private $_gqlEndpoint = 'api';
 
 
     // Public Methods
@@ -613,6 +619,49 @@ class WebhookCest
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    public function testGraphqlQuery(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Authorization', 'Bearer SUPERSECRETTESTTOKEN');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_gqlEndpoint, [
+            'query' => '
+                {
+                  entries(section: "products", slug: "infinity-gauntlet") {
+                    ... on products_products_Entry {
+                      productDetails {
+                        sku
+                        price
+                        shippable
+                        taxable
+                        weight
+                        weightUnit
+                        length
+                        width
+                        height
+                        inventory
+                        dimensionsUnit
+                      }
+                    }
+                  }
+                }'
+        ]);
+
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(HttpCode::OK);
+
+        $I->seeResponseContains('"sku":"infinity-gauntlet"');
+        $I->seeResponseContains('"price":499.98');
+        $I->seeResponseContains('"shippable":true');
+        $I->seeResponseContains('"taxable":true');
+        $I->seeResponseContains('"weight":3');
+        $I->seeResponseContains('"weightUnit":"pounds"');
+        $I->seeResponseContains('"length":14');
+        $I->seeResponseContains('"width":8');
+        $I->seeResponseContains('"height":8');
+        $I->seeResponseContains('"inventory":1');
+        $I->seeResponseContains('"dimensionsUnit":"inches"');
     }
 
     // TODO: make sure ShipStation gets correct weight unit

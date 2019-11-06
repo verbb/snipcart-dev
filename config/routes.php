@@ -2,4 +2,4 @@
 
 return [
     'api' => 'graphql/api'
-]
+];

@@ -35,6 +35,10 @@ ddev ssh
 ./scripts/setup.sh
 ```
 
+```shell
+php craft migrate
+```
+
 This will pull composer dependencies, install Craft, and install the Snipcart plugin. The site will be available at https://snipcart-test.ddev.site, and Mailhog will be running at http://snipcart-test.ddev.site:8025.
 
 Log into the control panel at https://snipcart-test.ddev.site/admin with username and password `supersecret`.
