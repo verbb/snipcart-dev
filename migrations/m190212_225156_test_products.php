@@ -14,6 +14,7 @@ use craft\models\FieldLayoutTab;
 use workingconcept\snipcart\fields\ProductDetails;
 use workingconcept\snipcart\models\ProductDetails as ProductDetailsModel;
 use craft\helpers\StringHelper;
+use yii\db\Schema;
 
 /**
  * m190212_225156_test_products migration.
@@ -94,14 +95,18 @@ class m190212_225156_test_products extends Migration
         $productOptionsField->handle = 'productOptions';
         $productOptionsField->instructions = 'Optionally add product options and the how each should impact the base price (if at all).';
         $productOptionsField->required = false;
+        $productOptionsField->minRows = 0;
+        $productOptionsField->maxRows = 50;
+        $productOptionsField->searchable = true;
+        $productOptionsField->columnType = Schema::TYPE_TEXT;
         $productOptionsField->columns = [
-            [
+            'col1' => [
                 'heading' => 'Name',
                 'handle' => 'name',
                 'width' => '',
                 'type' => 'singleline',
             ],
-            [
+            'col2' => [
                 'heading' => 'Price +/-',
                 'handle' => 'price',
                 'width' => '15%',
