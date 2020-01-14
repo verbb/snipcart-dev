@@ -27,6 +27,10 @@ class m191102_142109_test_graphql extends Migration
 
         $graphQlService->saveSchema($schema);
 
+        // no ID after saving, so we need to re-fetch on UID for some reason
+        $uid = $schema->uid;
+        $schema = $graphQlService->getSchemaByUid($uid);
+
         // create token
         $token = new GqlToken();
 
