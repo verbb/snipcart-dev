@@ -1,34 +1,34 @@
 {
-    "require": {
-        "php": "^7.0.0",
-        "craftcms/cms": "^3.3.0",
-        "craftcms/webhooks": "^2.0",
-        "workingconcept/craft-snipcart": "@dev",
-        "vlucas/phpdotenv": "^2.4.0"
-    },
-    "require-dev": {
-        "codeception/codeception": "^3.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "modules\\": "modules/"
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "platform": {
-            "php": "7.2"
-        }
-    },
-    "scripts": {
-        "test-api": "./vendor/codeception/codeception/codecept run api",
-        "test-browser": "./vendor/codeception/codeception/codecept run acceptance"
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "symlink": false,
-            "url": "./plugin/"
-        }
-    ]
+  "require": {
+    "php": "^7.0.0",
+    "craftcms/cms": "^3.4.0-beta.1",
+    "craftcms/webhooks": "^2.0",
+    "workingconcept/craft-snipcart": "^1.2",
+    "vlucas/phpdotenv": "^2.4.0"
+  },
+  "require-dev": {
+    "codeception/codeception": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "modules\\": "modules/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "7.2"
+    }
+  },
+  "scripts": {
+    "test-api": "./vendor/codeception/codeception/codecept run api",
+    "test-browser": "./vendor/codeception/codeception/codecept run acceptance"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "symlink": false,
+      "url": "./plugin/"
+    }
+  ]
 }
