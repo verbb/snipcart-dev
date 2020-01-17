@@ -888,11 +888,14 @@ class WebhookCest
 
             if (isset($pageBlock->productInfo))
             {
+                $price = $pageBlock->productInfo->price;
+                $quantity = 1;
+
                 $item = new Item([
                     'token'        => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
                     'name'         => $pageBlock->productName ?? 'Unnamed Item',
-                    'price'        => $pageBlock->productInfo->price,
-                    'quantity'     => 1,
+                    'price'        => $price,
+                    'quantity'     => $quantity,
                     'url'          => $entry->url,
                     'id'           => $pageBlock->productInfo->sku,
                     'shippable'    => $pageBlock->productInfo->shippable,
@@ -908,7 +911,8 @@ class WebhookCest
                             'value'        => 'Option A',
                         ],
                     ],
-                    'unitPrice' => $pageBlock->productInfo->price,
+                    'unitPrice' => $price,
+                    'totalPrice' => $price * $quantity,
                 ]);
 
                 return $item;
@@ -941,17 +945,19 @@ class WebhookCest
         {
             $detailsHandle = \workingconcept\snipcart\helpers\FieldHelper::getProductInfoFieldHandle($entry);
 
-            $price     = $entry->{$detailsHandle}->price;
-            $shippable = $entry->{$detailsHandle}->shippable;
-            $taxable   = $entry->{$detailsHandle}->taxable;
-            $weight    = $entry->{$detailsHandle}->weight;
-            $sku       = $entry->{$detailsHandle}->sku;
+            $price      = $entry->{$detailsHandle}->price;
+            $shippable  = $entry->{$detailsHandle}->shippable;
+            $taxable    = $entry->{$detailsHandle}->taxable;
+            $weight     = $entry->{$detailsHandle}->weight;
+            $sku        = $entry->{$detailsHandle}->sku;
+            $quantity   = 1;
+            $totalPrice = $price * $quantity;
 
             $items[] = new Item([
                 'token'        => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
                 'name'         => $entry->title,
                 'price'        => $price,
-                'quantity'     => 1,
+                'quantity'     => $quantity,
                 'url'          => $entry->url,
                 'id'           => $sku,
                 'shippable'    => $shippable,
@@ -968,6 +974,7 @@ class WebhookCest
                     ],
                 ],
                 'unitPrice' => $price,
+                'totalPrice' => $totalPrice,
             ]);
         }
 
