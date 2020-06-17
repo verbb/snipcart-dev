@@ -4,6 +4,7 @@ namespace craft\contentmigrations;
 
 use Craft;
 use craft\db\Migration;
+use craft\errors\MigrationException;
 use craft\fields\Matrix;
 use craft\models\MatrixBlockType;
 use craft\helpers\StringHelper;
@@ -51,6 +52,11 @@ class m190526_215430_test_matrix_products extends Migration
             }
         }
 
+        if (! isset($productFieldGroup))
+        {
+            throw new MigrationException('m190526_215430_test_matrix_products', 'Product Fields group missing.');
+        }
+
         /**
          * Page Blocks Matrix field
          */
@@ -61,8 +67,11 @@ class m190526_215430_test_matrix_products extends Migration
         $pageBlocksField->instructions = 'Arrange these blocks to build the page.';
         $pageBlocksField->required = false;
 
-        Craft::$app->getFields()->saveField($pageBlocksField);
-
+        // skip validation here so we get an ID to use adding blocks
+        if (! Craft::$app->getFields()->saveField($pageBlocksField, false))
+        {
+            Craft::dd($pageBlocksField->getErrors());
+        }
 
         /**
          * Page Blocks → Heading block type
