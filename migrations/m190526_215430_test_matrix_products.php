@@ -201,7 +201,7 @@ class m190526_215430_test_matrix_products extends Migration
                         'productName' => 'Economy',
                         'productInfo' => [
                             'sku' => 'economy',
-                            'price' => 129.99,
+                            'price' => 100,
                             'taxable' => true,
                             'inventory' => 100,
                         ],

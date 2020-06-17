@@ -270,7 +270,7 @@ class m190212_225156_test_products extends Migration
                 'price' => 99999.98,
                 'taxable' => true,
                 'shippable' => false,
-                'weight' => 99999999999,
+                'weight' => 999999,
                 'weightUnit' => ProductDetailsModel::WEIGHT_UNIT_POUNDS,
                 'length' => 1,
                 'width' => 1,
