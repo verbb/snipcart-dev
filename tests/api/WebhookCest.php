@@ -1,10 +1,10 @@
 <?php 
 
 use workingconcept\snipcart\controllers\WebhooksController;
-use workingconcept\snipcart\models\Customer;
-use workingconcept\snipcart\models\Order;
-use workingconcept\snipcart\models\Subscription;
-use workingconcept\snipcart\models\Item;
+use workingconcept\snipcart\models\snipcart\Customer;
+use workingconcept\snipcart\models\snipcart\Order;
+use workingconcept\snipcart\models\snipcart\Subscription;
+use workingconcept\snipcart\models\snipcart\Item;
 use workingconcept\snipcart\services\Webhooks;
 use craft\elements\Entry;
 use GuzzleHttp\Client;
@@ -278,6 +278,7 @@ class WebhookCest
      *
      * WARNING: will fail without ShipStation API credentials.
      * WARNING: will fail if admin email notifications are off.
+     * WARNING: will fail if product is not shippable.
      *
      * @param ApiTester $I
      */
@@ -616,6 +617,47 @@ class WebhookCest
             'mode'           => Webhooks::WEBHOOK_MODE_TEST,
             'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
             'content'        => $customer
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    public function testRefundCreated(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_REFUND_CREATED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => [
+                'orderToken' => '62b31459-919e-4e6a-9c5d-764f5739cb9f',
+                'amount' => 29.75,
+                'comment' => 'Requested by customer.',
+                'notifiedCustomerByEmail' => true,
+                'currency' => 'USD'
+            ]
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+    }
+
+    public function testNotificationCreated(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName'      => WebhooksController::WEBHOOK_NOTIFICATION_CREATED,
+            'mode'           => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn'      => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'        => [
+                'notificationType' => 'Comment',
+                'sentByEmailOn' => null,
+                'sentByEmail' => false,
+                'orderToken' => '2e8fbc93-6a20-48f1-ad39-6797a61730b5',
+                'body' => 'notification body',
+                'message' => '<p>Backorder is expected on September 1st.</p>',
+                'resourceUrl' => 'https://foo.bar/',
+                'subject' => 'notification subject'
+            ]
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
