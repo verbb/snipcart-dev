@@ -68,7 +68,7 @@
 
                     {{ productInfo.getBuyNowButton({
                         classes: buttonClasses
-                    }) | raw }}
+                    }) }}
                 </div>
 
                 <div class="row mt-8">
@@ -82,7 +82,7 @@
                             options: formattedOptions
                         }] : null,
                         classes: buttonClasses
-                    }) | raw }}
+                    }) }}
                 </div>
             </div>
         {% elseif entry.pageBlocks is defined and entry.pageBlocks | length %}
@@ -105,7 +105,7 @@
                                 name: block.productName,
                                 text: 'Buy for ' ~ (block.productInfo.price | currency),
                                 classes: buttonClasses
-                            }) | raw }}
+                            }) }}
                         </div>
                     {% endif %}
                 {% endfor %}
