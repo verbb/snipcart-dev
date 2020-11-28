@@ -1,0 +1,48 @@
+contentColumnType: text
+fieldGroup: d07e3821-ffb4-4407-80a2-06f84b0e7d97
+handle: productOptions
+instructions: 'Optionally add product options and the how each should impact the base price (if at all).'
+name: 'Product Options'
+searchable: true
+settings:
+  addRowLabel: 'Add a row'
+  columnType: text
+  columns:
+    __assoc__:
+      -
+        - col1
+        -
+          __assoc__:
+            -
+              - heading
+              - Name
+            -
+              - handle
+              - name
+            -
+              - width
+              - ''
+            -
+              - type
+              - singleline
+      -
+        - col2
+        -
+          __assoc__:
+            -
+              - heading
+              - 'Price +/-'
+            -
+              - handle
+              - price
+            -
+              - width
+              - 15%
+            -
+              - type
+              - number
+  maxRows: 50
+  minRows: 0
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Table

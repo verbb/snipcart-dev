@@ -1,0 +1,18 @@
+contentColumnType: text
+fieldGroup: d07e3821-ffb4-4407-80a2-06f84b0e7d97
+handle: productDescription
+instructions: 'Describe the product so customers can fully appreciate what they''re not buying.'
+name: 'Product Description'
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: false
+  columnType: null
+  initialRows: 2
+  multiline: true
+  placeholder: null
+  uiMode: normal
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

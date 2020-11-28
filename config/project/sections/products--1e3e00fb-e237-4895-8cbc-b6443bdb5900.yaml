@@ -1,0 +1,20 @@
+enableVersioning: true
+handle: products
+name: Products
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+propagationMethod: all
+siteSettings:
+  eb53b682-9f07-4b37-858c-02f8acea7dd0:
+    enabledByDefault: true
+    hasUrls: true
+    template: products/_entry
+    uriFormat: 'products/{slug}'
+type: channel

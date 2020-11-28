@@ -19,17 +19,8 @@ class m191102_142109_test_graphql extends Migration
     {
         $graphQlService = Craft::$app->getGql();
 
-        // create schema + scope
-        $schema = new GqlSchema();
-
-        $schema->name = 'Test Schema';
-        $schema->scope = $this->_getSchemaScope();
-
-        $graphQlService->saveSchema($schema);
-
         // no ID after saving, so we need to re-fetch on UID for some reason
-        $uid = $schema->uid;
-        $schema = $graphQlService->getSchemaByUid($uid);
+        $schema = $graphQlService->getSchemaByUid('29c10875-8ed7-44a4-a35b-08bf257ec5a5');
 
         // create token
         $token = new GqlToken();
@@ -54,29 +45,4 @@ class m191102_142109_test_graphql extends Migration
         echo "m191102_142109_test_graphql cannot be reverted.\n";
         return false;
     }
-
-    private function _getSchemaScope(): array
-    {
-        $allPermissions = Craft::$app->getGql()->getAllPermissions();
-        $scope = [];
-
-        foreach ($allPermissions as $category => $permission)
-        {
-            foreach ($permission as $key => $details)
-            {
-                $scope[] = $key;
-
-                if (isset($details['nested']))
-                {
-                    foreach ($details['nested'] as $nestedKey => $nestedDetails)
-                    {
-                        $scope[] = $nestedKey;
-                    }
-                }
-            }
-        }
-
-        return $scope;
-    }
-
 }

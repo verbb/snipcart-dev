@@ -1,0 +1,111 @@
+dateModified: 1606590408
+email:
+  fromEmail: matt@workingconcept.com
+  fromName: 'Snipcart Test DDEV'
+  transportType: craft\mail\transportadapters\Sendmail
+plugins:
+  snipcart:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.9
+    settings:
+      cacheDurationLimit: '300'
+      cacheResponses: '1'
+      customerNotificationEmailTemplate: ''
+      defaultCurrency: usd
+      enabledCurrencies:
+        - usd
+      logCustomRates: ''
+      logWebhookRequests: ''
+      notificationEmailTemplate: ''
+      notificationEmails:
+        - matt@workingconcept.com
+      orderCommentsFieldName: 'Order Comments'
+      orderGiftNoteFieldName: 'Gift Note'
+      providerSettings:
+        __assoc__:
+          -
+            - shipStation
+            -
+              __assoc__:
+                -
+                  - apiKey
+                  - $SHIPSTATION_API_KEY
+                -
+                  - apiSecret
+                  - $SHIPSTATION_API_SECRET
+                -
+                  - defaultCarrierCode
+                  - '12345'
+                -
+                  - defaultPackageCode
+                  - '12345'
+                -
+                  - defaultCountry
+                  - US
+                -
+                  - defaultOrderConfirmation
+                  - delivery
+                -
+                  - defaultWarehouseId
+                  - '13245'
+                -
+                  - enableShippingRates
+                  - '1'
+                -
+                  - sendCompletedOrders
+                  - '1'
+      publicApiKey: $SNIPCART_API_KEY
+      publicTestApiKey: ''
+      reFeedAttemptWindow: 15
+      reduceQuantitiesOnOrder: ''
+      secretApiKey: $SNIPCART_SECRET_API_KEY
+      secretTestApiKey: ''
+      sendCustomerOrderNotificationEmail: ''
+      sendOrderNotificationEmail: '1'
+      sendTestModeEmail: ''
+      shipFromAddress:
+        __assoc__:
+          -
+            - name
+            - Matt
+          -
+            - companyName
+            - ''
+          -
+            - address1
+            - '12345 Something Street'
+          -
+            - address2
+            - ''
+          -
+            - city
+            - Somewhere
+          -
+            - province
+            - TX
+          -
+            - postalCode
+            - '78741'
+          -
+            - country
+            - US
+          -
+            - phone
+            - '(555) 555-5555'
+          -
+            - email
+            - matt@workingconcept.com
+      testMode: ''
+system:
+  edition: pro
+  live: true
+  name: 'Snipcart Test DDEV'
+  schemaVersion: 3.6.0
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  requireEmailVerification: true

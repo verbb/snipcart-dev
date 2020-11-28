@@ -1,0 +1,16 @@
+isPublic: false
+name: 'Test Schema'
+scope:
+  - 'sections.1e3e00fb-e237-4895-8cbc-b6443bdb5900:read'
+  - 'entrytypes.54e24faf-b93b-43b9-bc7d-4250bc8ed7f8:read'
+  - 'entrytypes.cde54832-f7e0-46a6-9a77-41a15fd7c9fe:read'
+  - 'usergroups.everyone:read'
+  - 'sections.1e3e00fb-e237-4895-8cbc-b6443bdb5900:edit'
+  - 'entrytypes.54e24faf-b93b-43b9-bc7d-4250bc8ed7f8:edit'
+  - 'entrytypes.54e24faf-b93b-43b9-bc7d-4250bc8ed7f8:create'
+  - 'entrytypes.54e24faf-b93b-43b9-bc7d-4250bc8ed7f8:save'
+  - 'entrytypes.54e24faf-b93b-43b9-bc7d-4250bc8ed7f8:delete'
+  - 'entrytypes.cde54832-f7e0-46a6-9a77-41a15fd7c9fe:edit'
+  - 'entrytypes.cde54832-f7e0-46a6-9a77-41a15fd7c9fe:create'
+  - 'entrytypes.cde54832-f7e0-46a6-9a77-41a15fd7c9fe:save'
+  - 'entrytypes.cde54832-f7e0-46a6-9a77-41a15fd7c9fe:delete'

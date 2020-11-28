@@ -1,0 +1,72 @@
+field: f905f97a-d868-4646-adb7-050b075dbda8
+fieldLayouts:
+  87c973d9-c1b5-424a-8c67-0ce341f39cbd:
+    tabs:
+      -
+        elements:
+          -
+            fieldUid: 16405a95-ac8f-443d-8ede-2cb117ed9f42
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: be4109f5-faa1-431f-b3d7-9b3528b5fc9e
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+fields:
+  16405a95-ac8f-443d-8ede-2cb117ed9f42:
+    contentColumnType: text
+    fieldGroup: null
+    handle: productName
+    instructions: ''
+    name: 'Product Name'
+    searchable: false
+    settings:
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: null
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\fields\PlainText
+  be4109f5-faa1-431f-b3d7-9b3528b5fc9e:
+    contentColumnType: string
+    fieldGroup: null
+    handle: productInfo
+    instructions: 'Add relevant details for a product.'
+    name: 'Product Info'
+    searchable: false
+    settings:
+      defaultDimensionsUnit: inches
+      defaultHeight: ''
+      defaultLength: ''
+      defaultShippable: ''
+      defaultTaxable: '1'
+      defaultWeight: ''
+      defaultWeightUnit: pounds
+      defaultWidth: ''
+      displayInventory: '1'
+      displayShippableSwitch: ''
+      displayTaxableSwitch: '1'
+      skuDefault: ''
+    translationKeyFormat: null
+    translationMethod: none
+    type: workingconcept\snipcart\fields\ProductDetails
+handle: product
+name: Product
+sortOrder: 2
