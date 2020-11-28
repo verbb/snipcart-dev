@@ -345,6 +345,109 @@ class WebhookCest
             ],
             'shippingAddressSameAsBilling' => true,
             'creditCardLast4Digits' => null,
+            'shippingMethod' => null,
+            'shippingFees' => 0,
+            'taxableTotal' => 0,
+            'taxesTotal' => 0,
+            'itemsTotal' => $itemsTotal,
+            'totalWeight' => $totalWeight,
+            'grandTotal' => $grandTotal,
+            'finalGrandTotal' => $grandTotal,
+            'ipAddress' => '0.0.0.0',
+            'userAgent' => 'test',
+            'items' => $items,
+        ]);
+
+        $orderArray = $order->toArray([], $order->extraFields(), true);
+
+        if (isset($orderArray['cpUrl']))
+        {
+            /**
+             * Remove read-only property that would throw an exception
+             * if we tried to set it.
+             */
+            unset($orderArray['cpUrl']);
+        }
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST($this->_webhookEndpoint, [
+            'eventName' => WebhooksController::WEBHOOK_ORDER_COMPLETED,
+            'mode'      => Webhooks::WEBHOOK_MODE_TEST,
+            'createdOn' => date('c'), // "2018-12-05T18:43:22.2419667Z"
+            'content'   => $orderArray
+        ]);
+
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+
+        // items without weight
+        $I->seeResponseContains('{"success":true');
+
+        
+        /**
+         * Repeat, but force items to be shippable.
+         */
+        $totalWeight = 0;
+        $grandTotal = 0;
+        $itemsTotal = 0;
+
+        foreach ($items as &$item)
+        {
+            $item->totalWeight = 1;
+            $item->shippable = true;
+            
+            $totalWeight += $item->totalWeight;
+            $grandTotal += $item->price;
+            $itemsTotal += $item->quantity;
+        }
+
+        $order = new Order([
+            'invoiceNumber' => 'SNIP-' . $this->_generateRandomString(6),
+            'token' => 'befd6350-1efc-43f3-b605-86bad6fb74aG',
+            'creationDate' => date('c'),
+            'modificationDate' => date('c'),
+            'status' => 'InProgress',
+            'email' => $person->email,
+            'billingAddressName'       => $person->billingAddressName,
+            'billingAddressAddress1'   => $person->billingAddressAddress1,
+            'billingAddressAddress2'   => $person->billingAddressAddress2,
+            'billingAddressCity'       => $person->billingAddressCity,
+            'billingAddressProvince'   => $person->billingAddressProvince,
+            'billingAddressPostalCode' => $person->billingAddressPostalCode,
+            'billingAddressCountry'    => $person->billingAddressCountry,
+            'billingAddressPhone'      => $person->billingAddressPhone,
+            'billingAddress'           => [
+                'fullName'   => $person->billingAddressName,
+                'name'       => $person->billingAddressName,
+                'address1'   => $person->billingAddressAddress1,
+                'address2'   => $person->billingAddressAddress2,
+                'city'       => $person->billingAddressCity,
+                'province'   => $person->billingAddressProvince,
+                'postalCode' => $person->billingAddressPostalCode,
+                'country'    => $person->billingAddressCountry,
+                'phone'      => $person->billingAddressPhone,
+            ],
+            'shippingAddressName'       => $person->shippingAddressName,
+            'shippingAddressAddress1'   => $person->shippingAddressAddress1,
+            'shippingAddressAddress2'   => $person->shippingAddressAddress2,
+            'shippingAddressCity'       => $person->shippingAddressCity,
+            'shippingAddressProvince'   => $person->shippingAddressProvince,
+            'shippingAddressPostalCode' => $person->shippingAddressPostalCode,
+            'shippingAddressCountry'    => $person->shippingAddressCountry,
+            'shippingAddressPhone'      => $person->shippingAddressPhone,
+            'shippingAddress'           => [
+                'fullName'   => $person->shippingAddressName,
+                'name'       => $person->shippingAddressName,
+                'address1'   => $person->shippingAddressAddress1,
+                'address2'   => $person->shippingAddressAddress2,
+                'city'       => $person->shippingAddressCity,
+                'province'   => $person->shippingAddressProvince,
+                'postalCode' => $person->shippingAddressPostalCode,
+                'country'    => $person->shippingAddressCountry,
+                'phone'      => $person->shippingAddressPhone,
+            ],
+            'shippingAddressSameAsBilling' => true,
+            'creditCardLast4Digits' => null,
             'shippingMethod' => 'UPS Ground',
             'shippingFees' => 5,
             'taxableTotal' => 0,
@@ -380,10 +483,8 @@ class WebhookCest
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
 
-        // when devMode = true, order won't actually be sent to ShipStation and we'll get order ID 99999999 in the response
+        // when devMode = true, order won’t be sent to ShipStation so we’ll get order ID 99999999 in the response
         $I->seeResponseContains('{"success":true,"shipstation_order_id":99999999}');
-
-        // TODO: make sure notifications are enabled, otherwise this will fail!
 
         $lastMessage = $this->_getLastEmail();
 
@@ -394,6 +495,8 @@ class WebhookCest
 
         $containsInvoiceNumber = strpos((string)$lastMessageBody, $order['invoiceNumber']) !== false;
         $containsShipStationReference = strpos((string)$lastMessageBody, 'ShipStation #') !== false;
+
+        // TODO: make sure notifications are enabled, otherwise this will fail!
 
         $I->assertTrue($containsInvoiceNumber, 'Email contains invoice number.');
         $I->assertTrue($containsShipStationReference, 'Email contains ShipStation ID.');
