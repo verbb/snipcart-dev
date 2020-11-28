@@ -2,7 +2,7 @@ APIVersion: v1.13.1
 name: snipcart-test
 type: php
 docroot: web
-php_version: "7.3"
+php_version: "7.4"
 webserver_type: nginx-fpm
 router_http_port: "80"
 router_https_port: "443"
@@ -10,7 +10,7 @@ xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 mariadb_version: "10.2"
-nfs_mount_enabled: true
+nfs_mount_enabled: false
 provider: default
 use_dns_when_possible: true
 timezone: ""
