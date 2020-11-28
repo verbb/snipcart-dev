@@ -15,4 +15,4 @@ fi
 php craft install --email=nobody@example.com --username=supersecret --password=supersecret --siteName="Interweb Shoppe" --siteUrl=SITE_URL --language=en-US
 
 # install Snipcart plugin
-php craft install/plugin snipcart
+php craft plugin/install snipcart
