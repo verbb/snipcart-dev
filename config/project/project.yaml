@@ -1,4 +1,4 @@
-dateModified: 1614542235
+dateModified: 1614547393
 email:
   fromEmail: engineering@fostercommerce.com
   fromName: 'Snipcart Dev'
@@ -13,7 +13,7 @@ plugins:
       cacheDurationLimit: '300'
       cacheResponses: ''
       customerNotificationEmailTemplate: ''
-      defaultCurrency: usd
+      defaultCurrency: chf
       enabledCurrencies:
         - usd
       logCustomRates: ''
@@ -58,7 +58,7 @@ plugins:
       publicApiKey: $SNIPCART_PUBLIC_API_KEY
       publicTestApiKey: $SNIPCART_PUBLIC_API_KEY
       reFeedAttemptWindow: 15
-      reduceQuantitiesOnOrder: ''
+      reduceQuantitiesOnOrder: '1'
       secretApiKey: $SNIPCART_SECRET_API_KEY
       secretTestApiKey: $SNIPCART_SECRET_API_KEY
       sendCustomerOrderNotificationEmail: ''

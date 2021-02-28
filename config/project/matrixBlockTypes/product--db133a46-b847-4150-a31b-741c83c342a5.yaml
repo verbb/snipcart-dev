@@ -41,7 +41,7 @@ fields:
       defaultWeight: ''
       defaultWeightUnit: grams
       defaultWidth: ''
-      displayInventory: '1'
+      displayInventory: ''
       displayShippableSwitch: '1'
       displayTaxableSwitch: '1'
       skuDefault: ''
