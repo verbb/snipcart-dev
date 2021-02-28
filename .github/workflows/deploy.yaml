@@ -1,0 +1,76 @@
+name: Deploy
+
+# Required GitHub Secrets:
+# - PRODUCTION_WEBSERVER_PATH - Path on the production webserver to the website directory
+# - DEPLOY_USER - User to connect over SSH as
+# - WEBSERVER_PRIVATE_KEY - Private key for SSH
+# - PRODUCTION_WEBSERVER_HOST - Production webserver IP address
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy web app
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Set environment
+        run: |
+          echo "ENVIRONMENT=production" >> $GITHUB_ENV
+
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          tools: composer:v2
+          extensions: intl-67.1, gd
+
+      # Set up the Craft site
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.composer-cache.outputs.dir }}
+            vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-progress
+
+      - uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{secrets.WEBSERVER_PRIVATE_KEY}}
+
+      - name: Copy website to remote
+        run: |
+          rsync -az \
+            --copy-links \
+            --stats \
+            --delete \
+            --exclude=.git \
+            --exclude=.env \
+            --exclude=node_modules \
+            --exclude=workspaces \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ \
+            ${{secrets.DEPLOY_USER}}@${{secrets.PRODUCTION_WEBSERVER_HOST}}:${{secrets.PRODUCTION_WEBSERVER_PATH}}
+
+      - name: Run post-deploy script
+        run: |
+          ssh \
+            -o StrictHostKeyChecking=no \
+            ${{secrets.DEPLOY_USER}}@${{secrets.PRODUCTION_WEBSERVER_HOST}} \
+            "export SITE_PATH=${{secrets.PRODUCTION_WEBSERVER_PATH}}; ${{secrets.PRODUCTION_WEBSERVER_PATH}}/scripts/post-deploy.sh"

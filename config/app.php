@@ -7,7 +7,7 @@ return [
     'bootstrap' => ['store-module'],
     'components' => [
         'mailer' => function() {
-            if (\workingconcept\snipcart\helpers\VersionHelper::isCraft31())
+            if (\fostercommerce\snipcart\helpers\VersionHelper::isCraft31())
             {
                 $settings = \craft\helpers\App::mailSettings();
             }

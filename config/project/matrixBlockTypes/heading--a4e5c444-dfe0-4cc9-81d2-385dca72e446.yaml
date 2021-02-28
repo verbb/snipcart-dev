@@ -1,14 +1,14 @@
-field: f905f97a-d868-4646-adb7-050b075dbda8
+field: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb
 fieldLayouts:
-  f28d8b84-01cf-4e19-8997-7103049b794e:
+  b8ebab1f-4c19-49a3-b626-7262a082aecd:
     tabs:
       -
         elements:
           -
-            fieldUid: 7a902d0d-a0bd-4c7d-8a70-7f6a7438ee19
+            fieldUid: 6884bf14-6cfc-4f23-ac2f-3702687f8602
             instructions: null
             label: null
-            required: true
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -16,7 +16,7 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  7a902d0d-a0bd-4c7d-8a70-7f6a7438ee19:
+  6884bf14-6cfc-4f23-ac2f-3702687f8602:
     contentColumnType: text
     fieldGroup: null
     handle: heading

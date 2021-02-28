@@ -2,6 +2,7 @@
 
 return [
     '*' => [
+        'useEmailAsUsername'   => true,
         'defaultWeekStartDay'  => 0,
         'enableCsrfProtection' => true,
         'omitScriptNameInUrls' => true,

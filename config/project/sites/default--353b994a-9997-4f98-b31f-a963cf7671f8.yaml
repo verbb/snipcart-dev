@@ -1,0 +1,9 @@
+baseUrl: $PRIMARY_SITE_URL
+enabled: true
+handle: default
+hasUrls: true
+language: en-US
+name: 'Snipcart Dev'
+primary: true
+siteGroup: 7c59e003-25ea-4bac-9467-fb0ebd1b9cf6
+sortOrder: 1

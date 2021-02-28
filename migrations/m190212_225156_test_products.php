@@ -11,8 +11,8 @@ use craft\fields\PlainText;
 use craft\fields\Table;
 use craft\models\FieldGroup;
 use craft\models\FieldLayoutTab;
-use workingconcept\snipcart\fields\ProductDetails;
-use workingconcept\snipcart\models\ProductDetails as ProductDetailsModel;
+use fostercommerce\snipcart\fields\ProductDetails;
+use fostercommerce\snipcart\models\ProductDetails as ProductDetailsModel;
 use craft\helpers\StringHelper;
 use yii\db\Schema;
 

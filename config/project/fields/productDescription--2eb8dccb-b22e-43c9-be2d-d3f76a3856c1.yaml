@@ -1,17 +1,17 @@
 contentColumnType: text
-fieldGroup: d07e3821-ffb4-4407-80a2-06f84b0e7d97
+fieldGroup: 8d3cabd4-1037-4e8e-8417-8b6361290ec6
 handle: productDescription
-instructions: 'Describe the product so customers can fully appreciate what they''re not buying.'
+instructions: ''
 name: 'Product Description'
 searchable: false
 settings:
   byteLimit: null
   charLimit: null
-  code: false
+  code: ''
   columnType: null
-  initialRows: 2
-  multiline: true
-  placeholder: null
+  initialRows: '4'
+  multiline: ''
+  placeholder: ''
   uiMode: normal
 translationKeyFormat: null
 translationMethod: none

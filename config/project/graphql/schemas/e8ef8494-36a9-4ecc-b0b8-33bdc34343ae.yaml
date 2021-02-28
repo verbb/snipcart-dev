@@ -1,0 +1,6 @@
+isPublic: false
+name: 'Dev Schema'
+scope:
+  - 'sections.8e737589-250f-4c64-baa3-bc9a444cb243:read'
+  - 'entrytypes.e0433a5c-bd50-4ba7-9d0c-ed1873de08c1:read'
+  - 'entrytypes.047ec4b6-3ea6-4bbd-83bd-6af055a3a7cc:read'

@@ -1,5 +1,5 @@
 fieldLayouts:
-  ef889c97-0908-489d-9747-254757bd3b56:
+  2f1f4698-bc5b-4efe-90d5-ee8186714f55:
     tabs:
       -
         elements:
@@ -27,7 +27,25 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: f905f97a-d868-4646-adb7-050b075dbda8
+            fieldUid: 2eb8dccb-b22e-43c9-be2d-d3f76a3856c1
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: eff3417c-3955-4de7-a137-b7a99e365c5c
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: 83ea9cdc-c4be-4c53-b40f-1d1e75f9ff73
             instructions: null
             label: null
             required: false
@@ -37,11 +55,11 @@ fieldLayouts:
             width: 100
         name: Content
         sortOrder: 1
-handle: complexProducts
+handle: products
 hasTitleField: true
-name: 'Complex Products'
-section: 1e3e00fb-e237-4895-8cbc-b6443bdb5900
-sortOrder: 2
+name: Products
+section: 8e737589-250f-4c64-baa3-bc9a444cb243
+sortOrder: 1
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site

@@ -1,9 +1,0 @@
-baseUrl: 'https://snipcart-test.ddev.site'
-enabled: true
-handle: default
-hasUrls: true
-language: en-US
-name: 'Snipcart Test DDEV'
-primary: true
-siteGroup: 6aebf2f6-5d1c-4096-ba27-4934baf2960c
-sortOrder: 1

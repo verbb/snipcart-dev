@@ -10,9 +10,17 @@ previewTargets:
       -
         - urlFormat
         - '{url}'
-propagationMethod: all
+      -
+        - refresh
+        - '1'
+propagationMethod: none
 siteSettings:
-  eb53b682-9f07-4b37-858c-02f8acea7dd0:
+  280fceb8-a5d2-4c0b-9ee5-1ab5d6de749b:
+    enabledByDefault: true
+    hasUrls: true
+    template: products/_entry
+    uriFormat: 'other/products/{slug}'
+  353b994a-9997-4f98-b31f-a963cf7671f8:
     enabledByDefault: true
     hasUrls: true
     template: products/_entry

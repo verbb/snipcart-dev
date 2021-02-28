@@ -1,11 +1,11 @@
-field: f905f97a-d868-4646-adb7-050b075dbda8
+field: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb
 fieldLayouts:
-  87c973d9-c1b5-424a-8c67-0ce341f39cbd:
+  4461f21f-abb8-4816-8013-0f3970460f78:
     tabs:
       -
         elements:
           -
-            fieldUid: 16405a95-ac8f-443d-8ede-2cb117ed9f42
+            fieldUid: c7fd47c1-7147-466b-9710-16b4d5d9c0e2
             instructions: null
             label: null
             required: false
@@ -14,10 +14,10 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: be4109f5-faa1-431f-b3d7-9b3528b5fc9e
+            fieldUid: 97134205-e4b8-4169-a51b-ca23329ec35a
             instructions: null
             label: null
-            required: true
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -25,7 +25,30 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  16405a95-ac8f-443d-8ede-2cb117ed9f42:
+  97134205-e4b8-4169-a51b-ca23329ec35a:
+    contentColumnType: string
+    fieldGroup: null
+    handle: productInfo
+    instructions: ''
+    name: 'Product Info'
+    searchable: false
+    settings:
+      defaultDimensionsUnit: centimeters
+      defaultHeight: ''
+      defaultLength: ''
+      defaultShippable: '1'
+      defaultTaxable: '1'
+      defaultWeight: ''
+      defaultWeightUnit: grams
+      defaultWidth: ''
+      displayInventory: '1'
+      displayShippableSwitch: '1'
+      displayTaxableSwitch: '1'
+      skuDefault: ''
+    translationKeyFormat: null
+    translationMethod: none
+    type: fostercommerce\snipcart\fields\ProductDetails
+  c7fd47c1-7147-466b-9710-16b4d5d9c0e2:
     contentColumnType: text
     fieldGroup: null
     handle: productName
@@ -44,29 +67,6 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\PlainText
-  be4109f5-faa1-431f-b3d7-9b3528b5fc9e:
-    contentColumnType: string
-    fieldGroup: null
-    handle: productInfo
-    instructions: 'Add relevant details for a product.'
-    name: 'Product Info'
-    searchable: false
-    settings:
-      defaultDimensionsUnit: inches
-      defaultHeight: ''
-      defaultLength: ''
-      defaultShippable: ''
-      defaultTaxable: '1'
-      defaultWeight: ''
-      defaultWeightUnit: pounds
-      defaultWidth: ''
-      displayInventory: '1'
-      displayShippableSwitch: ''
-      displayTaxableSwitch: '1'
-      skuDefault: ''
-    translationKeyFormat: null
-    translationMethod: none
-    type: workingconcept\snipcart\fields\ProductDetails
 handle: product
 name: Product
 sortOrder: 2

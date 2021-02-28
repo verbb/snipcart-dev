@@ -1,0 +1,9 @@
+baseUrl: null
+enabled: true
+handle: snipcartDevOtherSite
+hasUrls: false
+language: en-US
+name: 'Snipcart Dev Other Site'
+primary: false
+siteGroup: 7c59e003-25ea-4bac-9467-fb0ebd1b9cf6
+sortOrder: 2

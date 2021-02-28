@@ -1,0 +1,22 @@
+contentColumnType: string
+fieldGroup: 8d3cabd4-1037-4e8e-8417-8b6361290ec6
+handle: productDetails
+instructions: ''
+name: 'Product Details'
+searchable: false
+settings:
+  defaultDimensionsUnit: centimeters
+  defaultHeight: ''
+  defaultLength: ''
+  defaultShippable: '1'
+  defaultTaxable: '1'
+  defaultWeight: ''
+  defaultWeightUnit: grams
+  defaultWidth: ''
+  displayInventory: '1'
+  displayShippableSwitch: '1'
+  displayTaxableSwitch: '1'
+  skuDefault: ''
+translationKeyFormat: null
+translationMethod: none
+type: fostercommerce\snipcart\fields\ProductDetails

@@ -1,10 +1,10 @@
 <?php
 namespace modules;
 
-use workingconcept\snipcart\services\Products;
-use workingconcept\snipcart\events\OrderEvent;
-use workingconcept\snipcart\events\InventoryEvent;
-use workingconcept\snipcart\helpers\FieldHelper;
+use fostercommerce\snipcart\services\Products;
+use fostercommerce\snipcart\events\OrderEvent;
+use fostercommerce\snipcart\events\InventoryEvent;
+use fostercommerce\snipcart\helpers\FieldHelper;
 use Craft;
 use craft\mail\Message;
 use yii\base\Event;
