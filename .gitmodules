@@ -1,0 +1,3 @@
+[submodule "plugins/craft-snipcart"]
+	path = plugins/craft-snipcart
+	url = git@github.com:FosterCommerce/snipcart-craft-plugin.git

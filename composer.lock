@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33063d8bb8310a5b3db57ae7e9f813ec",
+    "content-hash": "67b7cdadb4c421c55be9a8688ebef727",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -1213,17 +1213,11 @@
         },
         {
             "name": "fostercommerce/craft-snipcart",
-            "version": "1.5.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FosterCommerce/snipcart-craft-plugin.git",
-                "reference": "223286d41b7da73ade4a09c5b695a8a63992d286"
-            },
+            "version": "1.5.2",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FosterCommerce/snipcart-craft-plugin/zipball/223286d41b7da73ade4a09c5b695a8a63992d286",
-                "reference": "223286d41b7da73ade4a09c5b695a8a63992d286",
-                "shasum": ""
+                "type": "path",
+                "url": "plugins/craft-snipcart",
+                "reference": "a691fa041a0f09fef59331af814bb756391de3f1"
             },
             "require": {
                 "craftcms/cms": "^3.3.0",
@@ -1255,7 +1249,6 @@
                     "fostercommerce\\snipcart\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
@@ -1267,8 +1260,8 @@
             ],
             "description": "Craft CMS e-commerce in a day.",
             "keywords": [
-                "Craft",
                 "cms",
+                "craft",
                 "craft-plugin",
                 "craft3",
                 "craftcms",
@@ -1276,10 +1269,11 @@
             ],
             "support": {
                 "docs": "https://snipcart.fostercommerce.com/",
-                "issues": "https://github.com/FosterCommerce/snipcart-craft-plugin/issues",
-                "source": "https://github.com/FosterCommerce/snipcart-craft-plugin/tree/1.5.1.1"
+                "issues": "https://github.com/FosterCommerce/snipcart-craft-plugin/issues"
             },
-            "time": "2021-02-09T17:44:37+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3335,9 +3329,6 @@
             ],
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v5.2.3"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -5534,8 +5525,8 @@
                 "validate"
             ],
             "support": {
-                "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/1.9.1"
+                "issues": "https://github.com/webmozart/assert/issues",
+                "source": "https://github.com/webmozart/assert/tree/master"
             },
             "time": "2020-07-08T17:02:28+00:00"
         },
@@ -8613,11 +8604,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {
-        "craftcms/cms": 5
-    },
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5"

@@ -4,5 +4,4 @@ node_modules
 /.idea
 /.vscode
 /vendor
-/plugin
 web/cpresources
