@@ -8,11 +8,13 @@ return [
         'omitScriptNameInUrls' => true,
         'cpTrigger'            => 'admin',
         'securityKey'          => getenv('SECURITY_KEY'),
+        'allowAdminChanges'    => false,
     ],
 
     'dev' => [
-        'siteUrl' => getenv('SITE_URL'),
-        'devMode' => true,
+        'siteUrl'           => getenv('SITE_URL'),
+        'devMode'           => true,
+        'allowAdminChanges' => true,
     ],
 
     'test' => [

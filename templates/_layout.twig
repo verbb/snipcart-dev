@@ -39,6 +39,6 @@
         </footer>
     {% endblock %}
 
-    {{ craft.snipcart.cartSnippet }}
+    {{ craft.snipcart.cartSnippet(true, 'Snipcart.api.cart.currency(\'' ~ craft.snipcart.defaultCurrency ~ '\');') }}
 </body>
 </html>

@@ -49,7 +49,7 @@
             {# display details for a product defined directly on the Entry #}
             {% if productInfo.price -%}
                 <p class="font-bold text-white">
-                    {{ productInfo.price | currency }}
+                    {{ craft.snipcart.formatCurrency(productInfo.price, craft.snipcart.defaultCurrency) }}
                     {% if productInfo.inventory < 10 %}
                         <span class="text-red-dark text-sm ml-2">Low stock, order now!</span>
                     {% endif %}
@@ -67,7 +67,7 @@
                     <p class="text-sm pt-2 border-t border-grey-light">This is a really plain button.</p>
 
                     {{ productInfo.getBuyNowButton({
-                        classes: buttonClasses
+                        classes: buttonClasses,
                     }) }}
                 </div>
 
