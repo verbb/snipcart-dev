@@ -13,7 +13,7 @@ settings:
   defaultWeight: ''
   defaultWeightUnit: grams
   defaultWidth: ''
-  displayInventory: ''
+  displayInventory: '1'
   displayShippableSwitch: '1'
   displayTaxableSwitch: '1'
   skuDefault: ''

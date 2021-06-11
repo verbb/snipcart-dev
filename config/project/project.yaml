@@ -1,4 +1,4 @@
-dateModified: 1614547393
+dateModified: 1623426209
 email:
   fromEmail: engineering@fostercommerce.com
   fromName: 'Snipcart Dev'
@@ -13,11 +13,11 @@ plugins:
       cacheDurationLimit: '300'
       cacheResponses: ''
       customerNotificationEmailTemplate: ''
-      defaultCurrency: chf
+      defaultCurrency: usd
       enabledCurrencies:
         - usd
-      logCustomRates: ''
-      logWebhookRequests: ''
+      logCustomRates: '1'
+      logWebhookRequests: '1'
       notificationEmailTemplate: ''
       notificationEmails: ''
       orderCommentsFieldName: ''
