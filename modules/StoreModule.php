@@ -1,9 +1,12 @@
 <?php
 namespace modules;
 
+use fostercommerce\snipcart\services\Orders;
 use fostercommerce\snipcart\services\Products;
+use fostercommerce\snipcart\services\Shipments;
 use fostercommerce\snipcart\events\OrderEvent;
 use fostercommerce\snipcart\events\InventoryEvent;
+use fostercommerce\snipcart\events\ShippingRateEvent;
 use fostercommerce\snipcart\helpers\FieldHelper;
 use Craft;
 use craft\mail\Message;
@@ -59,6 +62,40 @@ class StoreModule extends \yii\base\Module
 
                     Craft::$app->mailer->send($message);
                 }
+            }
+        );
+        */
+
+        /*
+        Event::on(
+            Shipments::class,
+            Shipments::EVENT_BEFORE_RETURN_SHIPPING_RATES,
+            function(ShippingRateEvent $event) {
+
+                // respond with custom rates
+                $event->rates = [
+                    [
+                        'cost' => 10,
+                        'description' => '10$ shipping',
+                    ],
+                    [
+                        'cost' => 20,
+                        'description' => '20$ shipping',
+                        'guaranteedDaysToDelivery' => 5,
+                    ],
+                ];
+
+                // OR (comment one or the other)
+
+                // respond with an error
+                $event->isValid = false;
+                $event->errors = [
+                    [
+                        'key' => 'invalid_postal_code',
+                        'message' => 'The postal code is invalid.',
+                    ],
+                ];
+
             }
         );
         */

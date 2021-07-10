@@ -1213,11 +1213,11 @@
         },
         {
             "name": "fostercommerce/craft-snipcart",
-            "version": "1.5.4",
+            "version": "1.5.5",
             "dist": {
                 "type": "path",
                 "url": "plugins/craft-snipcart",
-                "reference": "6ff9f24a8fdc3ed747421b2df2af8f7a08b8380e"
+                "reference": "050052fc4999539297aa933c4e6cc265119f8dc9"
             },
             "require": {
                 "craftcms/cms": "^3.3.0",
