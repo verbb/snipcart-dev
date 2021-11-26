@@ -45,7 +45,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 83ea9cdc-c4be-4c53-b40f-1d1e75f9ff73
+            fieldUid: 83ea9cdc-c4be-4c53-b40f-1d1e75f9ff73 # Product Details
             instructions: null
             label: null
             required: false

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bd16c420dcbdf2e9b633f5404998b88",
+    "content-hash": "44c26f263ce341f077257c0de6d9680c",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -923,11 +923,11 @@
         },
         {
             "name": "fostercommerce/craft-snipcart",
-            "version": "1.5.5",
+            "version": "1.5.6",
             "dist": {
                 "type": "path",
                 "url": "plugins/craft-snipcart",
-                "reference": "050052fc4999539297aa933c4e6cc265119f8dc9"
+                "reference": "d78024a08d0a413d0f870604fceb5ae03a53425b"
             },
             "require": {
                 "craftcms/cms": "^3.3.0",

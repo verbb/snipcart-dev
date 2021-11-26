@@ -9,7 +9,7 @@
     "vlucas/phpdotenv": "^2.4.0",
     "yiisoft/yii2": "^2.0",
     "yiisoft/yii2-shell": "^2.0",
-    "fostercommerce/craft-snipcart": "1.5.5"
+    "fostercommerce/craft-snipcart": "1.5.6"
   },
   "require-dev": {
     "codeception/codeception": "^4.0",

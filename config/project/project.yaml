@@ -1,10 +1,12 @@
-dateModified: 1637927178
+dateModified: 1637927797
 email:
   fromEmail: engineering@fostercommerce.com
   fromName: 'Snipcart Dev'
   transportType: craft\mail\transportadapters\Sendmail
 meta:
   __names__:
+    8d3cabd4-1037-4e8e-8417-8b6361290ec6: Common # Common
+    83ea9cdc-c4be-4c53-b40f-1d1e75f9ff73: 'Product Details' # Product Details
     ce2b6eb1-d61e-44e6-bd0b-dce122ce1433: 'Public Schema' # Public Schema
     e8ef8494-36a9-4ecc-b0b8-33bdc34343ae: 'Dev Schema' # Dev Schema
 plugins:
