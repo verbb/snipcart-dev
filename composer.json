@@ -4,7 +4,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.2.5",
-    "craftcms/cms": "3.7.22",
+    "craftcms/cms": "3.7.67",
     "craftcms/webhooks": "^2.0",
     "vlucas/phpdotenv": "^2.4.0",
     "yiisoft/yii2": "^2.0",
