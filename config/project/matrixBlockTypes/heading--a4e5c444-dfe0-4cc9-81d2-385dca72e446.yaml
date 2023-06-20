@@ -17,6 +17,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   6884bf14-6cfc-4f23-ac2f-3702687f8602:
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: heading
@@ -30,7 +31,7 @@ fields:
       columnType: null
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none

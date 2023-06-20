@@ -26,6 +26,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   97134205-e4b8-4169-a51b-ca23329ec35a:
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: productInfo
@@ -33,22 +34,14 @@ fields:
     name: 'Product Info'
     searchable: false
     settings:
-      defaultDimensionsUnit: centimeters
-      defaultHeight: ''
-      defaultLength: ''
-      defaultShippable: '1'
-      defaultTaxable: '1'
-      defaultWeight: ''
-      defaultWeightUnit: grams
-      defaultWidth: ''
-      displayInventory: ''
-      displayShippableSwitch: '1'
-      displayTaxableSwitch: '1'
-      skuDefault: ''
+      errorMessage: 'Unable to find component class ''fostercommerce\snipcart\fields\ProductDetails''.'
+      expectedType: fostercommerce\snipcart\fields\ProductDetails
+      settings: '{"defaultDimensionsUnit":"centimeters","defaultHeight":"","defaultLength":"","defaultShippable":"1","defaultTaxable":"1","defaultWeight":"","defaultWeightUnit":"grams","defaultWidth":"","displayInventory":"","displayShippableSwitch":"1","displayTaxableSwitch":"1","skuDefault":""}'
     translationKeyFormat: null
     translationMethod: none
-    type: fostercommerce\snipcart\fields\ProductDetails
+    type: craft\fields\MissingField
   c7fd47c1-7147-466b-9710-16b4d5d9c0e2:
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: productName
@@ -62,7 +55,7 @@ fields:
       columnType: null
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none
