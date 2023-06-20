@@ -121,7 +121,7 @@ system:
   edition: pro
   live: true
   name: 'Snipcart Dev'
-  schemaVersion: 3.8.0.1
+  schemaVersion: 4.4.0.4
   timeZone: America/Los_Angeles
 users:
   allowPublicRegistration: false
