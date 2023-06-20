@@ -9,6 +9,10 @@ return [
         'cpTrigger'            => 'admin',
         'securityKey'          => getenv('SECURITY_KEY'),
         'allowAdminChanges'    => false,
+		// Custom aliases available on every request
+		'aliases' => [
+			'@web' => App::env('PRIMARY_SITE_URL')
+		],
     ],
 
     'dev' => [
