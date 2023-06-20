@@ -6,7 +6,7 @@
     "php": "8.0",
     "craftcms/cms": "3.8.12",
     "craftcms/webhooks": "^2.0",
-    "vlucas/phpdotenv": "^2.4.0",
+    "vlucas/phpdotenv": "^5.4.0",
     "yiisoft/yii2": "^2.0",
     "yiisoft/yii2-shell": "^2.0",
     "fostercommerce/craft-snipcart": "1.6.0"
