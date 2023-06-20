@@ -12,13 +12,13 @@ return [
     ],
 
     'dev' => [
-        'siteUrl'           => getenv('SITE_URL'),
+        'siteUrl'           => getenv('PRIMARY_SITE_URL'),
         'devMode'           => true,
         'allowAdminChanges' => true,
     ],
 
     'test' => [
-        'siteUrl' => getenv('SITE_URL'),
+        'siteUrl' => getenv('PRIMARY_SITE_URL'),
         'devMode' => true,
     ],
 ];
