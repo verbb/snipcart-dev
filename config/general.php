@@ -9,9 +9,9 @@ return [
         'cpTrigger'            => 'admin',
         'securityKey'          => getenv('SECURITY_KEY'),
         'allowAdminChanges'    => false,
-		// Custom aliases available on every request
+		'resourceBasePath' => dirname(__DIR__) . '/web/cpresources',
 		'aliases' => [
-			'@web' => getenv('PRIMARY_SITE_URL')
+			'@webroot' => getenv('PRIMARY_SITE_URL')
 		],
     ],
 
