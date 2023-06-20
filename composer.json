@@ -4,11 +4,11 @@
   "prefer-stable": true,
   "require": {
     "php": "^8.1",
-    "craftcms/cms": "3.8.14",
-    "craftcms/webhooks": "^2.0",
+    "craftcms/cms": "^4.0.0",
     "vlucas/phpdotenv": "^2.4.0",
     "yiisoft/yii2": "^2.0",
-    "yiisoft/yii2-shell": "^2.0"
+    "yiisoft/yii2-shell": "^2.0",
+    "fostercommerce/craft-snipcart": "dev-develop-craft4"
   },
   "require-dev": {
     "codeception/codeception": "^4.0",
