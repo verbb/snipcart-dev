@@ -2,7 +2,7 @@ columnSuffix: null
 contentColumnType: text
 fieldGroup: 8d3cabd4-1037-4e8e-8417-8b6361290ec6 # Common
 handle: productOptions
-instructions: ''
+instructions: null
 name: 'Product Options'
 searchable: false
 settings:
@@ -51,8 +51,9 @@ settings:
         -
           - col2
           - ''
-  maxRows: ''
-  minRows: ''
+  maxRows: null
+  minRows: null
+  staticRows: false
 translationKeyFormat: null
 translationMethod: none
 type: craft\fields\Table

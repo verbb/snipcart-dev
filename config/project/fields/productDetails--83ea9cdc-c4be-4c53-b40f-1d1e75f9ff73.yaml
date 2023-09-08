@@ -1,14 +1,69 @@
-columnSuffix: null
-contentColumnType: string
+columnSuffix: leqffdsa
+contentColumnType:
+  - 'sku:string'
+  - 'inventory:integer'
+  - 'price:money'
+  - 'taxable:boolean'
+  - 'shippable:boolean'
+  - 'weight:float'
+  - 'weightUnit:string'
+  - 'length:float'
+  - 'width:float'
+  - 'height:float'
+  - 'dimensionsUnit:string'
 fieldGroup: 8d3cabd4-1037-4e8e-8417-8b6361290ec6 # Common
 handle: productDetails
-instructions: ''
+instructions: null
 name: 'Product Details'
 searchable: false
 settings:
-  errorMessage: 'Unable to find component class ''fostercommerce\snipcart\fields\ProductDetails''.'
-  expectedType: fostercommerce\snipcart\fields\ProductDetails
-  settings: '{"defaultDimensionsUnit":"centimeters","defaultHeight":"","defaultLength":"","defaultShippable":"1","defaultTaxable":"1","defaultWeight":"","defaultWeightUnit":"grams","defaultWidth":"","displayInventory":"1","displayShippableSwitch":"1","displayTaxableSwitch":"1","skuDefault":""}'
+  columnType:
+    __assoc__:
+      -
+        - sku
+        - string
+      -
+        - inventory
+        - integer
+      -
+        - price
+        - money
+      -
+        - taxable
+        - boolean
+      -
+        - shippable
+        - boolean
+      -
+        - weight
+        - float
+      -
+        - weightUnit
+        - string
+      -
+        - length
+        - float
+      -
+        - width
+        - float
+      -
+        - height
+        - float
+      -
+        - dimensionsUnit
+        - string
+  defaultDimensionsUnit: centimeters
+  defaultHeight: ''
+  defaultLength: ''
+  defaultShippable: '1'
+  defaultTaxable: '1'
+  defaultWeight: ''
+  defaultWeightUnit: grams
+  defaultWidth: ''
+  displayInventory: '1'
+  displayShippableSwitch: '1'
+  displayTaxableSwitch: '1'
+  skuDefault: ''
 translationKeyFormat: null
 translationMethod: none
-type: craft\fields\MissingField
+type: fostercommerce\snipcart\fields\ProductDetails

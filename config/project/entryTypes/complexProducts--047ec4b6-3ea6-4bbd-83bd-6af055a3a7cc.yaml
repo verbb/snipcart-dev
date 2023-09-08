@@ -27,7 +27,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb
+            fieldUid: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb # Page Blocks
             instructions: null
             label: null
             required: false

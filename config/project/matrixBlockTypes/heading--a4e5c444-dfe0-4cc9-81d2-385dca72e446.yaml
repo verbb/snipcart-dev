@@ -1,36 +1,41 @@
-field: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb
+field: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb # Page Blocks
 fieldLayouts:
   b8ebab1f-4c19-49a3-b626-7262a082aecd:
     tabs:
       -
+        elementCondition: null
         elements:
           -
-            fieldUid: 6884bf14-6cfc-4f23-ac2f-3702687f8602
+            elementCondition: null
+            fieldUid: 6884bf14-6cfc-4f23-ac2f-3702687f8602 # Heading
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: c0510651-35d7-436e-af71-33a9f0bae659
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: d28c1cb7-8349-4667-a7cf-9285b13dde1f
+        userCondition: null
 fields:
-  6884bf14-6cfc-4f23-ac2f-3702687f8602:
+  6884bf14-6cfc-4f23-ac2f-3702687f8602: # Heading
     columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: heading
-    instructions: ''
+    instructions: null
     name: Heading
     searchable: false
     settings:
       byteLimit: null
       charLimit: null
-      code: ''
+      code: false
       columnType: null
-      initialRows: '4'
-      multiline: ''
+      initialRows: 4
+      multiline: false
       placeholder: null
       uiMode: normal
     translationKeyFormat: null

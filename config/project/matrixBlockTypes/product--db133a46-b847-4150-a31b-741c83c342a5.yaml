@@ -1,60 +1,123 @@
-field: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb
+field: f7f5703c-a5d1-4ece-81f6-cd69aacba8cb # Page Blocks
 fieldLayouts:
   4461f21f-abb8-4816-8013-0f3970460f78:
     tabs:
       -
+        elementCondition: null
         elements:
           -
-            fieldUid: c7fd47c1-7147-466b-9710-16b4d5d9c0e2
+            elementCondition: null
+            fieldUid: c7fd47c1-7147-466b-9710-16b4d5d9c0e2 # Product Name
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: f90a1135-f226-48fe-a707-7b2760b93c76
+            userCondition: null
             warning: null
             width: 100
           -
-            fieldUid: 97134205-e4b8-4169-a51b-ca23329ec35a
+            elementCondition: null
+            fieldUid: 97134205-e4b8-4169-a51b-ca23329ec35a # Product Info
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 5417da45-bc5d-42e4-8334-00eef4476a5d
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: 9b8c40b3-805e-4fcb-94f3-5890017afe6a
+        userCondition: null
 fields:
-  97134205-e4b8-4169-a51b-ca23329ec35a:
-    columnSuffix: null
-    contentColumnType: string
+  97134205-e4b8-4169-a51b-ca23329ec35a: # Product Info
+    columnSuffix: qpgzozje
+    contentColumnType:
+      - 'sku:string'
+      - 'inventory:integer'
+      - 'price:money'
+      - 'taxable:boolean'
+      - 'shippable:boolean'
+      - 'weight:float'
+      - 'weightUnit:string'
+      - 'length:float'
+      - 'width:float'
+      - 'height:float'
+      - 'dimensionsUnit:string'
     fieldGroup: null
     handle: productInfo
-    instructions: ''
+    instructions: null
     name: 'Product Info'
     searchable: false
     settings:
-      errorMessage: 'Unable to find component class ''fostercommerce\snipcart\fields\ProductDetails''.'
-      expectedType: fostercommerce\snipcart\fields\ProductDetails
-      settings: '{"defaultDimensionsUnit":"centimeters","defaultHeight":"","defaultLength":"","defaultShippable":"1","defaultTaxable":"1","defaultWeight":"","defaultWeightUnit":"grams","defaultWidth":"","displayInventory":"","displayShippableSwitch":"1","displayTaxableSwitch":"1","skuDefault":""}'
+      columnType:
+        __assoc__:
+          -
+            - sku
+            - string
+          -
+            - inventory
+            - integer
+          -
+            - price
+            - money
+          -
+            - taxable
+            - boolean
+          -
+            - shippable
+            - boolean
+          -
+            - weight
+            - float
+          -
+            - weightUnit
+            - string
+          -
+            - length
+            - float
+          -
+            - width
+            - float
+          -
+            - height
+            - float
+          -
+            - dimensionsUnit
+            - string
+      defaultDimensionsUnit: centimeters
+      defaultHeight: ''
+      defaultLength: ''
+      defaultShippable: '1'
+      defaultTaxable: '1'
+      defaultWeight: ''
+      defaultWeightUnit: grams
+      defaultWidth: ''
+      displayInventory: ''
+      displayShippableSwitch: '1'
+      displayTaxableSwitch: '1'
+      skuDefault: ''
     translationKeyFormat: null
     translationMethod: none
-    type: craft\fields\MissingField
-  c7fd47c1-7147-466b-9710-16b4d5d9c0e2:
+    type: fostercommerce\snipcart\fields\ProductDetails
+  c7fd47c1-7147-466b-9710-16b4d5d9c0e2: # Product Name
     columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: productName
-    instructions: ''
+    instructions: null
     name: 'Product Name'
     searchable: false
     settings:
       byteLimit: null
       charLimit: null
-      code: ''
+      code: false
       columnType: null
-      initialRows: '4'
-      multiline: ''
+      initialRows: 4
+      multiline: false
       placeholder: null
       uiMode: normal
     translationKeyFormat: null

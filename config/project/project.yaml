@@ -1,28 +1,22 @@
-dateModified: 1687293328
+dateModified: 1694170433
 email:
   fromEmail: engineering@fostercommerce.com
   fromName: 'Snipcart Dev'
   transportType: craft\mail\transportadapters\Sendmail
 meta:
   __names__:
-    2eb8dccb-b22e-43c9-be2d-d3f76a3856c1: 'Product Description'
-    7c59e003-25ea-4bac-9467-fb0ebd1b9cf6: 'Snipcart Dev'
+    2eb8dccb-b22e-43c9-be2d-d3f76a3856c1: 'Product Description' # Product Description
     8d3cabd4-1037-4e8e-8417-8b6361290ec6: Common # Common
-    8e737589-250f-4c64-baa3-bc9a444cb243: Products
-    047ec4b6-3ea6-4bbd-83bd-6af055a3a7cc: 'Complex Products'
     83ea9cdc-c4be-4c53-b40f-1d1e75f9ff73: 'Product Details' # Product Details
-    280fceb8-a5d2-4c0b-9ee5-1ab5d6de749b: 'Snipcart Dev Other Site'
-    353b994a-9997-4f98-b31f-a963cf7671f8: 'Snipcart Dev'
-    6884bf14-6cfc-4f23-ac2f-3702687f8602: Heading
-    97134205-e4b8-4169-a51b-ca23329ec35a: 'Product Info'
-    a4e5c444-dfe0-4cc9-81d2-385dca72e446: Heading
-    c7fd47c1-7147-466b-9710-16b4d5d9c0e2: 'Product Name'
+    6884bf14-6cfc-4f23-ac2f-3702687f8602: Heading # Heading
+    97134205-e4b8-4169-a51b-ca23329ec35a: 'Product Info' # Product Info
+    a4e5c444-dfe0-4cc9-81d2-385dca72e446: Heading # Heading
+    c7fd47c1-7147-466b-9710-16b4d5d9c0e2: 'Product Name' # Product Name
     ce2b6eb1-d61e-44e6-bd0b-dce122ce1433: 'Public Schema' # Public Schema
-    db133a46-b847-4150-a31b-741c83c342a5: Product
-    e0433a5c-bd50-4ba7-9d0c-ed1873de08c1: Products
+    db133a46-b847-4150-a31b-741c83c342a5: Product # Product
     e8ef8494-36a9-4ecc-b0b8-33bdc34343ae: 'Dev Schema' # Dev Schema
-    eff3417c-3955-4de7-a137-b7a99e365c5c: 'Product Options'
-    f7f5703c-a5d1-4ece-81f6-cd69aacba8cb: 'Page Blocks'
+    eff3417c-3955-4de7-a137-b7a99e365c5c: 'Product Options' # Product Options
+    f7f5703c-a5d1-4ece-81f6-cd69aacba8cb: 'Page Blocks' # Page Blocks
 plugins:
   snipcart:
     edition: standard
@@ -121,7 +115,7 @@ system:
   edition: pro
   live: true
   name: 'Snipcart Dev'
-  schemaVersion: 4.4.0.4
+  schemaVersion: 4.5.3.0
   timeZone: America/Los_Angeles
 users:
   allowPublicRegistration: false

@@ -27,7 +27,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 2eb8dccb-b22e-43c9-be2d-d3f76a3856c1
+            fieldUid: 2eb8dccb-b22e-43c9-be2d-d3f76a3856c1 # Product Description
             instructions: null
             label: null
             required: false
@@ -36,7 +36,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: eff3417c-3955-4de7-a137-b7a99e365c5c
+            fieldUid: eff3417c-3955-4de7-a137-b7a99e365c5c # Product Options
             instructions: null
             label: null
             required: false
