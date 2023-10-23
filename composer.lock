@@ -1515,11 +1515,11 @@
         },
         {
             "name": "fostercommerce/craft-snipcart",
-            "version": "2.1.1",
+            "version": "2.0.0",
             "dist": {
                 "type": "path",
                 "url": "plugins/craft-snipcart",
-                "reference": "503a57bbd3d2d25c43b031492f81f86e21ba1fef"
+                "reference": "64957491618a2afe1425522b380bff650acc01e5"
             },
             "require": {
                 "craftcms/cms": "^4.0.0",
@@ -9928,5 +9928,5 @@
     "platform-overrides": {
         "php": "8.1"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
